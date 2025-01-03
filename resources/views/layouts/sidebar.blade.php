@@ -30,19 +30,37 @@
         >
         <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link @if(Route::is('home') ) active @endif">
-              <i class="nav-icon bi bi-palette"></i>
+              <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('modules.index') }}" class="nav-link @if(Route::is('modules.*') ) active @endif">
+              <i class="nav-icon fas fa-book"></i>
+              <p>Module Belajar</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('records.index') }}" class="nav-link @if(Route::is('records.*') ) active @endif">
+              <i class="nav-icon fas fa-video"></i>
+              <p>Rekaman Kelas</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('files.index') }}" class="nav-link @if(Route::is('files.*') ) active @endif">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>Bahan Ajar Tutor</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('groups.index') }}" class="nav-link @if(Route::is('groups.*') ) active @endif">
               <i class="nav-icon bi bi-palette"></i>
-              <p>Groups</p>
+              <p>Daftar Kelas</p>
             </a>
           </li>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
-              <i class="nav-icon bi bi-speedometer"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Users
                 <i class="nav-arrow bi bi-chevron-right"></i>

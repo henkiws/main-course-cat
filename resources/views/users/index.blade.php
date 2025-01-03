@@ -7,11 +7,11 @@
     <div class="container-fluid">
       <!--begin::Row-->
       <div class="row">
-        <div class="col-sm-6"><h3 class="mb-0">User</h3></div>
+        <div class="col-sm-6"><h3 class="mb-0">Users</h3></div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User</li>
+            <li class="breadcrumb-item active" aria-current="page">Users</li>
           </ol>
         </div>
       </div>
@@ -63,7 +63,7 @@
                                 <a href="{{ route('users.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
-                                <a href="{{ route('users.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();if(confirm('Are you sure want to delete user?)){document.getElementById('form{{ $val->id }}').submit()}">
+                                <a href="{{ route('users.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit()">
                                     <i class="fas fa-trash"></i> 
                                 </a>
                                 <form id="form{{ $val->id }}" action="{{ route('users.destroy',[$val->id]) }}" method="POST" class="d-none">

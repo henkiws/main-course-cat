@@ -11,7 +11,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('groups.index') }}">Groups</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('files.index') }}">Files</a></li>
             <li class="breadcrumb-item active" aria-current="page">Form</li>
           </ol>
         </div>
@@ -29,13 +29,13 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Form Group</h3>
+                  <h3 class="card-title">Form File</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ isset($group->id) ? route('groups.update',[$group->id]) : route('groups.store') }}" method="POST">
+                <form action="{{ isset($file->id) ? route('files.update',[$file->id]) : route('files.store') }}" method="POST">
                     @csrf
-                    @if(isset($group->id))
+                    @if(isset($file->id))
                     @method('PUT')
                     @endif
                   <div class="card-body">
@@ -44,22 +44,38 @@
                     @endif
                     
                     <div class="form-group">
-                      <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ isset($group->id) ? $group->name : old('name')  }}">
+                      <label for="title">Title</label>
+                      <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="{{ isset($file->id) ? $file->title : old('title')  }}">
                     </div>
                     <div class="form-group">
                       <label for="name">Description</label>
-                      <textarea class="form-control" id="description" name="description">{{ isset($group->id) ? $group->description : old('description')  }}</textarea>
+                      <textarea class="form-control" id="description" name="description">{{ isset($file->id) ? $file->description : old('description')  }}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="date">Date</label>
+                      <input type="date" class="form-control" id="date" name="date_class" placeholder="Enter date" value="{{ isset($file->id) ? \Carbon\Carbon::parse($file->date_class)->format('Y-m-d') : old('date_class')  }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="tutor">Tutor</label>
+                      <input type="text" class="form-control" id="tutor" name="tutor" placeholder="Enter tutor" value="{{ isset($file->id) ? $file->tutor : old('tutor')  }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="file">Upload File</label>
+                      <input type="file" class="form-control" id="file" name="file" placeholder="Enter file">
+                    </div>
+                    <div class="form-group">
+                      <label for="position">Position</label>
+                      <input type="number" class="form-control" id="position" name="position" placeholder="Enter position" value="{{ isset($file->id) ? $file->position : old('position')  }}">
                     </div>
                     <div class="form-group">
                       <label for="name">Group</label>
-                      <select class="form-control" name="fk_user[]" multiple>
-                          @foreach($opt_user as $key => $val)
+                      <select class="form-control" name="fk_group[]" multiple>
+                          @foreach($opt_group as $key => $val)
                           <option value="{{ $key }}" 
-                            @isset($group->id)
+                            @isset($file->id)
                               @php
                                 foreach( $groups as $k => $v ) {
-                                  if( $v->fk_user == $key ) {
+                                  if( $v->fk_group == $key ) {
                                     print 'selected';
                                   }
                                 }

@@ -7,11 +7,11 @@
     <div class="container-fluid">
       <!--begin::Row-->
       <div class="row">
-        <div class="col-sm-6"><h3 class="mb-0">Groups</h3></div>
+        <div class="col-sm-6"><h3 class="mb-0">Modules</h3></div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Groups</li>
+            <li class="breadcrumb-item active" aria-current="page">Modules</li>
           </ol>
         </div>
       </div>
@@ -30,7 +30,7 @@
               <h3 class="card-title">Responsive Hover Table</h3>
 
               <div class="card-tools">
-                <a href="{{ route('groups.create') }}" class="btn btn-sm btn-primary">Add New Group</a>
+                <a href="{{ route('modules.create') }}" class="btn btn-sm btn-primary">Add New Module</a>
               </div>
             </div>
             <!-- /.card-header -->
@@ -40,36 +40,39 @@
                   <tr>
                     <th>No</th>
                     <th>Name</th>
-                    <th>Description</th>
-                    <th>Assigned to</th>
+                    <th class="text-center">Total Chapters</th>
+                    <th class="text-center">Position</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach($list as $key => $val)
+                    @forelse($list as $key => $val)
                         <tr>
                             <td>{{ ($key+1) }}</td>
                             <td>{{ $val->name }}</td>
-                            <td>{{ $val->description }}</td>
+                            <td class="text-center">{{ count($val->data_chapters) }}</td>
+                            <td class="text-center">{{ $val->position }}</td>
                             <td>
-                              @foreach($val->data_group_user as $k => $v)
-                                {{ $v->data_user->name.',' }}
-                              @endforeach
-                            </td>
-                            <td>
-                                <a href="{{ route('groups.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
+                                <a href="{{ route('chapters.show',[$val->id]) }}" class="btn btn-info btn-sm btn-custom btn-equal">
+                                    <i class="fas fa-eye"></i> 
+                                </a>
+                                <a href="{{ route('modules.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
-                                <a href="{{ route('groups.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit();">
+                                <a href="{{ route('modules.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit()">
                                     <i class="fas fa-trash"></i> 
                                 </a>
-                                <form id="form{{ $val->id }}" action="{{ route('groups.destroy',[$val->id]) }}" method="POST" class="d-none">
+                                <form id="form{{ $val->id }}" action="{{ route('modules.destroy',[$val->id]) }}" method="POST" class="d-none">
                                   @csrf
                                   @method('delete')
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                          <td class="text-center" colspan="4">No Data</td>
+                        </tr>
+                    @endforelse
                 </tbody>
               </table>
 

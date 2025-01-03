@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         Role::create(['name' => 'peserta']);
 
         $user1 = User::create([
-            'name'      => 'envitee',
+            'name'      => 'admin',
             'email'     => 'admin@mail.com',
             'email_verified_at'     => Carbon::now(),
             'password'  => Hash::make('admin123'),
@@ -37,7 +37,16 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(40)
         ]);
 
+        $user3 = User::create([
+            'name'      => 'smith',
+            'email'     => 'smith@mail.com',
+            'email_verified_at'     => Carbon::now(),
+            'password'  => Hash::make('admin123'),
+            'remember_token' => Str::random(40)
+        ]);
+
         $user1->assignRole('admin');
         $user2->assignRole('peserta');
+        $user3->assignRole('peserta');
     }
 }

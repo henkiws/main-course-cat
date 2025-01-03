@@ -41,4 +41,43 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/roles', [App\Http\Controllers\User\RoleController::class, 'store'])->name('roles.store');
     Route::put('/roles/{id}', [App\Http\Controllers\User\RoleController::class, 'update'])->name('roles.update');
     Route::delete('/roles/{id}', [App\Http\Controllers\User\RoleController::class, 'destroy'])->name('roles.destroy');
+
+    Route::get('/modules', [App\Http\Controllers\Module\ModuleController::class, 'index'])->name('modules.index');
+    Route::get('/modules/create', [App\Http\Controllers\Module\ModuleController::class, 'create'])->name('modules.create');
+    Route::get('/modules/{id}/edit', [App\Http\Controllers\Module\ModuleController::class, 'edit'])->name('modules.edit');
+    Route::post('/modules', [App\Http\Controllers\Module\ModuleController::class, 'store'])->name('modules.store');
+    Route::put('/modules/{id}', [App\Http\Controllers\Module\ModuleController::class, 'update'])->name('modules.update');
+    Route::delete('/modules/{id}', [App\Http\Controllers\Module\ModuleController::class, 'destroy'])->name('modules.destroy');
+
+    Route::get('/chapters', [App\Http\Controllers\Module\ChapterController::class, 'index'])->name('chapters.index');
+    Route::get('/chapters/module/{fk_module}', [App\Http\Controllers\Module\ChapterController::class, 'show'])->name('chapters.show');
+    Route::get('/chapters/module/{id}/details', [App\Http\Controllers\Module\ChapterController::class, 'details'])->name('chapters.details');
+    Route::get('/chapters/create', [App\Http\Controllers\Module\ChapterController::class, 'create'])->name('chapters.create');
+    Route::get('/chapters/{id}/edit', [App\Http\Controllers\Module\ChapterController::class, 'edit'])->name('chapters.edit');
+    Route::post('/chapters', [App\Http\Controllers\Module\ChapterController::class, 'store'])->name('chapters.store');
+    Route::put('/chapters/{id}', [App\Http\Controllers\Module\ChapterController::class, 'update'])->name('chapters.update');
+    Route::delete('/chapters/{id}', [App\Http\Controllers\Module\ChapterController::class, 'destroy'])->name('chapters.destroy');
+
+    Route::get('/videos', [App\Http\Controllers\Module\ChapterVideoController::class, 'index'])->name('videos.index');
+    Route::get('/videos/create', [App\Http\Controllers\Module\ChapterVideoController::class, 'create'])->name('videos.create');
+    Route::get('/videos/{id}/edit', [App\Http\Controllers\Module\ChapterVideoController::class, 'edit'])->name('videos.edit');
+    Route::post('/videos', [App\Http\Controllers\Module\ChapterVideoController::class, 'store'])->name('videos.store');
+    Route::put('/videos/{id}', [App\Http\Controllers\Module\ChapterVideoController::class, 'update'])->name('videos.update');
+    Route::delete('/videos/{id}', [App\Http\Controllers\Module\ChapterVideoController::class, 'destroy'])->name('videos.destroy');
+    
+    Route::get('/records', [App\Http\Controllers\Record\RecordController::class, 'index'])->name('records.index');
+    Route::get('/records/create', [App\Http\Controllers\Record\RecordController::class, 'create'])->name('records.create');
+    Route::get('/records/show/{id}', [App\Http\Controllers\Record\RecordController::class, 'show'])->name('records.show');
+    Route::get('/records/{id}/edit', [App\Http\Controllers\Record\RecordController::class, 'edit'])->name('records.edit');
+    Route::post('/records', [App\Http\Controllers\Record\RecordController::class, 'store'])->name('records.store');
+    Route::put('/records/{id}', [App\Http\Controllers\Record\RecordController::class, 'update'])->name('records.update');
+    Route::delete('/records/{id}', [App\Http\Controllers\Record\RecordController::class, 'destroy'])->name('records.destroy');
+
+    Route::get('/files', [App\Http\Controllers\File\FileController::class, 'index'])->name('files.index');
+    Route::get('/files/create', [App\Http\Controllers\File\FileController::class, 'create'])->name('files.create');
+    Route::get('/files/show/{id}', [App\Http\Controllers\File\FileController::class, 'show'])->name('files.show');
+    Route::get('/files/{id}/edit', [App\Http\Controllers\File\FileController::class, 'edit'])->name('files.edit');
+    Route::post('/files', [App\Http\Controllers\File\FileController::class, 'store'])->name('files.store');
+    Route::put('/files/{id}', [App\Http\Controllers\File\FileController::class, 'update'])->name('files.update');
+    Route::delete('/files/{id}', [App\Http\Controllers\File\FileController::class, 'destroy'])->name('files.destroy');
 });

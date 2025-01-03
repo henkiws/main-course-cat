@@ -16,8 +16,12 @@ class UserRepository
         return User::with(['data_user_group.data_group'])->get();
     }
 
+    public function getCount() {
+        return User::count();
+    }
+
     public function getDropdown($is_premium=0) {
-        return User::pluck('name','id');
+        return User::whereNotIn('id',[1])->pluck('name','id');
     }
 
     public function getPaginate($paginate = 10) {

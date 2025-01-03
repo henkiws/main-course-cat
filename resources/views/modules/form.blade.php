@@ -7,11 +7,11 @@
     <div class="container-fluid">
       <!--begin::Row-->
       <div class="row">
-        <div class="col-sm-6"><h3 class="mb-0">Form</h3></div>
+        <div class="col-sm-6"><h3 class="mb-0">Module</h3></div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('groups.index') }}">Groups</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('modules.index') }}">Modules</a></li>
             <li class="breadcrumb-item active" aria-current="page">Form</li>
           </ol>
         </div>
@@ -29,13 +29,13 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Form Group</h3>
+                  <h3 class="card-title">Form Module</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ isset($group->id) ? route('groups.update',[$group->id]) : route('groups.store') }}" method="POST">
+                <form action="{{ isset($module->id) ? route('modules.update',[$module->id]) : route('modules.store') }}" method="POST">
                     @csrf
-                    @if(isset($group->id))
+                    @if(isset($module->id))
                     @method('PUT')
                     @endif
                   <div class="card-body">
@@ -45,31 +45,16 @@
                     
                     <div class="form-group">
                       <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ isset($group->id) ? $group->name : old('name')  }}">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ isset($module->id) ? $module->name : old('name')  }}">
                     </div>
                     <div class="form-group">
                       <label for="name">Description</label>
-                      <textarea class="form-control" id="description" name="description">{{ isset($group->id) ? $group->description : old('description')  }}</textarea>
+                      <textarea class="form-control" id="description" name="description">{{ isset($module->id) ? $module->description : old('description')  }}</textarea>
                     </div>
                     <div class="form-group">
-                      <label for="name">Group</label>
-                      <select class="form-control" name="fk_user[]" multiple>
-                          @foreach($opt_user as $key => $val)
-                          <option value="{{ $key }}" 
-                            @isset($group->id)
-                              @php
-                                foreach( $groups as $k => $v ) {
-                                  if( $v->fk_user == $key ) {
-                                    print 'selected';
-                                  }
-                                }
-                              @endphp
-                            @endisset
-                          >{{ $val }}</option>
-                          @endforeach
-                      </select>
+                      <label for="position">Position</label>
+                      <input type="number" class="form-control" id="position" name="position" placeholder="Enter position" value="{{ isset($module->id) ? $module->position : old('position')  }}">
                     </div>
-
                   </div>
                   <!-- /.card-body -->
   

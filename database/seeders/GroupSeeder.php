@@ -18,12 +18,35 @@ class GroupSeeder extends Seeder
         Group::create([
             'name' => 'Group 1',
             'description' => 'Description Group 1',
+            'image' => ('files/sample.webp'),
             'created_by' => 1
         ]);
 
         Group::create([
             'name' => 'Group 2',
             'description' => 'Description Group 2',
+            'image' => ('files/sample.webp'),
+            'created_by' => 1
+        ]);
+
+        Group::create([
+            'name' => 'Group 3',
+            'description' => 'Description Group 4',
+            'image' => ('files/sample.webp'),
+            'created_by' => 1
+        ]);
+
+        Group::create([
+            'name' => 'Group 4',
+            'description' => 'Description Group 5',
+            'image' => ('files/sample.webp'),
+            'created_by' => 1
+        ]);
+
+        Group::create([
+            'name' => 'Group 5',
+            'description' => 'Description Group 5',
+            'image' => ('files/sample.webp'),
             'created_by' => 1
         ]);
 

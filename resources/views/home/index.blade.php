@@ -31,8 +31,8 @@
           <!--begin::Small Box Widget 1-->
           <div class="small-box text-bg-primary">
             <div class="inner">
-              <h3>150</h3>
-              <p>New Orders</p>
+              <h3>{{ $count_module }}</h3>
+              <p>Total Module</p>
             </div>
             <svg
               class="small-box-icon"
@@ -46,7 +46,7 @@
               ></path>
             </svg>
             <a
-              href="#"
+              href="{{ route('modules.index') }}"
               class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
             >
               More info <i class="bi bi-link-45deg"></i>
@@ -59,8 +59,8 @@
           <!--begin::Small Box Widget 2-->
           <div class="small-box text-bg-success">
             <div class="inner">
-              <h3>53<sup class="fs-5">%</sup></h3>
-              <p>Bounce Rate</p>
+              <h3>{{ $count_record }}</h3>
+              <p>Total Record</p>
             </div>
             <svg
               class="small-box-icon"
@@ -74,7 +74,7 @@
               ></path>
             </svg>
             <a
-              href="#"
+              href="{{ route('records.index') }}"
               class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
             >
               More info <i class="bi bi-link-45deg"></i>
@@ -87,8 +87,8 @@
           <!--begin::Small Box Widget 3-->
           <div class="small-box text-bg-warning">
             <div class="inner">
-              <h3>44</h3>
-              <p>User Registrations</p>
+              <h3>{{ $count_user }}</h3>
+              <p>Total User</p>
             </div>
             <svg
               class="small-box-icon"
@@ -102,7 +102,7 @@
               ></path>
             </svg>
             <a
-              href="#"
+              href="{{ route('users.index') }}"
               class="small-box-footer link-dark link-underline-opacity-0 link-underline-opacity-50-hover"
             >
               More info <i class="bi bi-link-45deg"></i>
@@ -115,8 +115,8 @@
           <!--begin::Small Box Widget 4-->
           <div class="small-box text-bg-danger">
             <div class="inner">
-              <h3>65</h3>
-              <p>Unique Visitors</p>
+              <h3>{{ $count_group }}</h3>
+              <p>Total Group</p>
             </div>
             <svg
               class="small-box-icon"
@@ -137,7 +137,7 @@
               ></path>
             </svg>
             <a
-              href="#"
+              href="{{ route('groups.index') }}"
               class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
             >
               More info <i class="bi bi-link-45deg"></i>
@@ -146,6 +146,16 @@
           <!--end::Small Box Widget 4-->
         </div>
         <!--end::Col-->
+
+        <div class="card">
+          <div class="card-header">
+              <h3 class="card-title">
+                  Welcome to KSN Akademi E-Course Admin Panel!                    </h3>
+          </div>
+          <div class="card-body">
+              <p>Admin Panel ini berfungsi untuk menyusun konten pembelajaran yang dapat diakses Peserta KSN Akademi Ahli Pabean Intensive Program</p>                </div>
+      </div>
+
       </div>
       <!--end::Row-->
     </div>

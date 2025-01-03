@@ -2,53 +2,43 @@
 
 namespace App\Repositories;
 
-use App\Models\Group;
-use App\Models\UserGroup;
+use App\Models\Chapters;
 use DB;
 
-class GroupRepository
+class ChaptersRepository
 {
     
     public function getAll() {
-        return Group::get();
-    }
-
-    public function getCount() {
-        return Group::count();
+        return Chapters::orderBy('position','ASC')->get();
     }
 
     public function getDropdown($is_premium=0) {
-        return Group::pluck('name','id');
+        return Chapters::orderBy('position','ASC')->pluck('name','id');
     }
 
     public function getPaginate($paginate = 10) {
-        return Group::with(['data_group_user'])->paginate(10);
+        return Chapters::with(['data_module'])->orderBy('position','ASC')->paginate(10);
+    }
+
+    public function getPaginateByModule($fk_module, $paginate = 10) {
+        return Chapters::where('fk_module',$fk_module)->orderBy('position','ASC')->paginate(10);
     }
 
     public function FetchById($id) {
-        return Group::findOrFail($id);
-    }
-
-    public function getByGroup($fk_group) {
-        return UserGroup::where('fk_group',$fk_group)->get();
+        return Chapters::findOrFail($id);
     }
 
     public function create($request) {
         $data   = [
+            "fk_module"      => $request->get('fk_module'),
             "name"      => $request->get('name'),
             "description"      => $request->get('description'),
+            "position"      => $request->get('position'),
             "active"      => 1,
             "created_by"      => auth()->user()->id,
         ];
 
-        $Group   = Group::create($data);
-
-        foreach( $request->get('fk_user') as $key => $val ) {
-            UserGroup::create([
-                "fk_group" => $Group->id,
-                "fk_user" => $val,
-            ]);
-        }
+        $Chapters   = Chapters::create($data);
        
         return [
             "status"    => "success",
@@ -60,23 +50,16 @@ class GroupRepository
     public function update($id, $request)
     {
         $data   = [
+            "fk_module"      => $request->get('fk_module'),
             "name"      => $request->get('name'),
             "description"      => $request->get('description'),
+            "position"      => $request->get('position'),
             "active"      => 1,
             "created_by"      => auth()->user()->id,
         ];
 
-        $Group   = Group::find($id);
-        $Group->update($data);
-
-        UserGroup::where('fk_group',$Group->id)->delete();
-
-        foreach( $request->get('fk_user') as $key => $val ) {
-            UserGroup::create([
-                "fk_group" => $Group->id,
-                "fk_user" => $val,
-            ]);
-        }
+        $Chapters   = Chapters::find($id);
+        $Chapters->update($data);
 
         return [
             "status"    => "success",
@@ -86,7 +69,7 @@ class GroupRepository
     }
 
     public function delete($id) {
-        Group::destroy($id);
+        Chapters::destroy($id);
         return [
             "status"    => "success",
             "msg"       => "Deleted Successfuly",

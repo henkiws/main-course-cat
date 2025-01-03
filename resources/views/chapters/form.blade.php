@@ -11,7 +11,8 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('modules.index') }}">Module</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('chapters.show',[isset($chapter->fk_module) ? $chapter->fk_module : $fk_module]) }}">Chapter</a></li>
             <li class="breadcrumb-item active" aria-current="page">Form</li>
           </ol>
         </div>
@@ -29,47 +30,33 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Form User</h3>
+                  <h3 class="card-title">Form Chapter Module: {{ isset($chapter->data_module->name) ? $chapter->data_module->name : $module->name }}</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ isset($user->id) ? route('users.update',[$user->id]) : route('users.store') }}" method="POST">
+                <form action="{{ isset($chapter->id) ? route('chapters.update',[$chapter->id]) : route('chapters.store') }}" method="POST">
                     @csrf
-                    @if(isset($user->id))
+                    @if(isset($chapter->id))
                     @method('PUT')
                     @endif
                   <div class="card-body">
                     @if($errors->any())
                         {!! implode('', $errors->all('<div class="alert alert-danger">:message</div>')) !!}
                     @endif
+
+                    <input type="hidden" name="fk_module" value="{{ isset($chapter->id) ? $chapter->fk_module : $module->id }}">
                     
                     <div class="form-group">
                       <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ isset($user->id) ? $user->name : old('name')  }}">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ isset($chapter->id) ? $chapter->name : old('name')  }}">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Enter name" value="{{ isset($user->id) ? $user->email : old('email')  }}">
+                      <label for="name">Description</label>
+                      <textarea class="form-control" id="description" name="description">{{ isset($chapter->id) ? $chapter->description : old('description')  }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Role</label>
-                        <select class="form-control" name="role">
-                            @foreach($opt_role as $key => $val)
-                            <option value="{{ $val }}" {{ isset($user->id) ? ($user->roles->pluck("name")->first() == $val ? "selected" : "") : '' }}>{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Group</label>
-                        <select class="form-control" name="fk_group">
-                            @foreach($opt_group as $key => $val)
-                            <option value="{{ $key }}" {{ isset($user->id) ? ($user->data_user_group->fk_group == $key ? 'selected' : '') : '' }}>{{ $val }}</option>
-                            @endforeach
-                        </select>
+                      <label for="position">Position</label>
+                      <input type="number" class="form-control" id="position" name="position" placeholder="Enter position" value="{{ isset($chapter->id) ? $chapter->position : old('position')  }}">
                     </div>
                   </div>
                   <!-- /.card-body -->

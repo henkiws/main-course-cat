@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Group;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
+use App\Repositories\UserRepository;
 
 class GroupController extends Controller
 {
-    public function __construct(GroupRepository $GroupRepository) {
+    public function __construct(GroupRepository $GroupRepository,
+                            UserRepository $UserRepository) {
         $this->GroupRepository = $GroupRepository;
+        $this->UserRepository = $UserRepository;
     }
 
     public function index() {
@@ -21,16 +24,18 @@ class GroupController extends Controller
 
     public function create() {
         $data = [
-            
+            "opt_user" => $this->UserRepository->getDropdown()
         ];
         return view('group.form', $data);
     }
 
     public function edit($id) {
-        $user   = $this->GroupRepository->FetchById($id);
+        $group   = $this->GroupRepository->FetchById($id);
 
         $data   = [
-            
+            "opt_user" => $this->UserRepository->getDropdown(),
+            "groups" => $this->GroupRepository->getByGroup($id),
+            "group" => $group
         ];
         return view('group.form', $data);
     }
@@ -38,7 +43,8 @@ class GroupController extends Controller
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'fk_user' => 'required',
         ]);
 
         $result = $this->GroupRepository->create($request);
@@ -54,7 +60,8 @@ class GroupController extends Controller
     public function update(Request $request, $id) {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'fk_user' => 'required',
         ]);
 
         $result = $this->GroupRepository->update($id, $request);

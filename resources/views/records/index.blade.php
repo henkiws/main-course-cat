@@ -7,11 +7,11 @@
     <div class="container-fluid">
       <!--begin::Row-->
       <div class="row">
-        <div class="col-sm-6"><h3 class="mb-0">Groups</h3></div>
+        <div class="col-sm-6"><h3 class="mb-0">Records</h3></div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Groups</li>
+            <li class="breadcrumb-item active" aria-current="page">Records</li>
           </ol>
         </div>
       </div>
@@ -30,7 +30,7 @@
               <h3 class="card-title">Responsive Hover Table</h3>
 
               <div class="card-tools">
-                <a href="{{ route('groups.create') }}" class="btn btn-sm btn-primary">Add New Group</a>
+                <a href="{{ route('records.create') }}" class="btn btn-sm btn-primary">Add New Record</a>
               </div>
             </div>
             <!-- /.card-header -->
@@ -39,9 +39,11 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Name</th>
+                    <th>Groups</th>
+                    <th>Title</th>
                     <th>Description</th>
-                    <th>Assigned to</th>
+                    <th>Tutor</th>
+                    <th>Date</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -49,21 +51,26 @@
                     @foreach($list as $key => $val)
                         <tr>
                             <td>{{ ($key+1) }}</td>
-                            <td>{{ $val->name }}</td>
-                            <td>{{ $val->description }}</td>
                             <td>
-                              @foreach($val->data_group_user as $k => $v)
-                                {{ $v->data_user->name.',' }}
+                              @foreach($val->data_group_records as $k => $v)
+                                {{ $v->data_group->name.',' }}
                               @endforeach
                             </td>
+                            <td>{{ $val->title }}</td>
+                            <td>{{ $val->description }}</td>
+                            <td>{{ $val->tutor }}</td>
+                            <td>{{ $val->date_class }}</td>
                             <td>
-                                <a href="{{ route('groups.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
+                                <a href="{{ route('records.show',[$val->id]) }}" class="btn btn-info btn-sm btn-equal">
+                                    <i class="fas fa-play"></i> 
+                                </a>
+                                <a href="{{ route('records.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
-                                <a href="{{ route('groups.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit();">
+                                <a href="{{ route('records.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit()">
                                     <i class="fas fa-trash"></i> 
                                 </a>
-                                <form id="form{{ $val->id }}" action="{{ route('groups.destroy',[$val->id]) }}" method="POST" class="d-none">
+                                <form id="form{{ $val->id }}" action="{{ route('records.destroy',[$val->id]) }}" method="POST" class="d-none">
                                   @csrf
                                   @method('delete')
                                 </form>
