@@ -29,9 +29,11 @@
             <div class="card-header">
               <h3 class="card-title">Responsive Hover Table</h3>
 
+              @role('admin')
               <div class="card-tools">
                 <a href="{{ route('records.create') }}" class="btn btn-sm btn-primary">Add New Record</a>
               </div>
+              @endrole
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -64,6 +66,7 @@
                                 <a href="{{ route('records.show',[$val->id]) }}" class="btn btn-info btn-sm btn-equal">
                                     <i class="fas fa-play"></i> 
                                 </a>
+                                @role('admin')
                                 <a href="{{ route('records.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
@@ -74,6 +77,7 @@
                                   @csrf
                                   @method('delete')
                                 </form>
+                                @endrole
                             </td>
                         </tr>
                     @endforeach

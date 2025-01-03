@@ -6,18 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\ModuleRecordsRepository;
 use App\Repositories\GroupRepository;
+use App\Repositories\UserRepository;
 
 class RecordController extends Controller
 {
     public function __construct(ModuleRecordsRepository $ModuleRecordsRepository,
-                                GroupRepository $GroupRepository) {
+                                GroupRepository $GroupRepository,
+                                UserRepository $UserRepository) {
         $this->ModuleRecordsRepository = $ModuleRecordsRepository;
         $this->GroupRepository = $GroupRepository;
+        $this->UserRepository = $UserRepository;
+
+        $this->middleware(['role:admin'], ['except' => ['index','show']]);
     }
 
     public function index() {
+        $user_group = $this->UserRepository->getUserGroup();
         $data = [
-            "list" => $this->ModuleRecordsRepository->getPaginate(),
+            "list" => $this->ModuleRecordsRepository->getPaginate(10,$user_group),
         ];
         return view('records.index', $data);
     }

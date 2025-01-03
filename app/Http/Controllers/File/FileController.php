@@ -6,18 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\ModuleFilesRepository;
 use App\Repositories\GroupRepository;
+use App\Repositories\UserRepository;
 
 class FileController extends Controller
 {
     public function __construct(ModuleFilesRepository $ModuleFilesRepository,
-                                GroupRepository $GroupRepository) {
+                                GroupRepository $GroupRepository,
+                                UserRepository $UserRepository) {
         $this->ModuleFilesRepository = $ModuleFilesRepository;
         $this->GroupRepository = $GroupRepository;
+        $this->UserRepository = $UserRepository;
+
+        $this->middleware(['role:admin'], ['except' => ['index','show']]);
     }
 
     public function index() {
+        $user_group = $this->UserRepository->getUserGroup();
         $data = [
-            "list" => $this->ModuleFilesRepository->getPaginate(),
+            "list" => $this->ModuleFilesRepository->getPaginate(10, $user_group),
         ];
         return view('files.index', $data);
     }

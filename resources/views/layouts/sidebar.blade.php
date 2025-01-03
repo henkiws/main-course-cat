@@ -52,6 +52,7 @@
               <p>Bahan Ajar Tutor</p>
             </a>
           </li>
+          @role('admin')
           <li class="nav-item">
             <a href="{{ route('groups.index') }}" class="nav-link @if(Route::is('groups.*') ) active @endif">
               <i class="nav-icon bi bi-palette"></i>
@@ -81,6 +82,7 @@
               </li>
             </ul>
           </li>
+          @endrole
           
         </ul>
         <!--end::Sidebar Menu-->

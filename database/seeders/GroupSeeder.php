@@ -56,7 +56,7 @@ class GroupSeeder extends Seeder
         ]);
 
         UserGroup::create([
-            'fk_user' => 2,
+            'fk_user' => 3,
             'fk_group' => 2
         ]);
     }

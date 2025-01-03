@@ -59,7 +59,7 @@ class ModuleSeeder extends Seeder
             ]);
 
             GroupFiles::create([
-                "fk_group" => 1,
+                "fk_group" => rand(1,2),
                 "fk_module_file" => $file->id
             ]);
         }
@@ -78,7 +78,7 @@ class ModuleSeeder extends Seeder
             ]);
 
             GroupRecords::create([
-                "fk_group" => 1,
+                "fk_group" => rand(1,2),
                 "fk_record" => $record->id
             ]);
         }

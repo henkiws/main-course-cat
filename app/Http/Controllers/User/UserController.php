@@ -16,6 +16,8 @@ class UserController extends Controller
         $this->UserRepository = $UserRepository;
         $this->RoleRepository = $RoleRepository;
         $this->GroupRepository = $GroupRepository;
+
+        $this->middleware(['role:admin']);
     }
 
     public function index() {

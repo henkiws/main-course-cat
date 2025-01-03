@@ -16,6 +16,8 @@ class ChapterController extends Controller
         $this->ChaptersRepository = $ChaptersRepository;
         $this->ModulesRepository = $ModulesRepository;
         $this->ChapterVideosRepository = $ChapterVideosRepository;
+
+        $this->middleware(['role:admin'], ['except' => ['index','show','details']]);
     }
 
     public function index(Request $request) {

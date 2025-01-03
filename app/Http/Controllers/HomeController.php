@@ -23,9 +23,10 @@ class HomeController extends Controller
 
     public function index()
     {
+        $user_group = $this->UserRepository->getUserGroup();
         $data = [
             "count_module" => $this->ModulesRepository->getCount(),
-            "count_record" => $this->ModuleRecordsRepository->getCount(),
+            "count_record" => $this->ModuleRecordsRepository->getCount($user_group),
             "count_user" => $this->UserRepository->getCount(),
             "count_group" => $this->GroupRepository->getCount(),
         ];

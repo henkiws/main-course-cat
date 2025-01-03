@@ -30,9 +30,11 @@
             <div class="card-header">
               <h3 class="card-title">Module: <strong>{{ $module->name??'' }}</strong></h3>
 
+              @role('admin')
               <div class="card-tools">
                 <a href="{{ route('chapters.create',['module='.$module->id]) }}" class="btn btn-sm btn-primary">Add New Chapter</a>
               </div>
+              @endrole
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -54,12 +56,13 @@
                             <td>{{ $val->description }}</td>
                             <td class="text-center">{{ $val->position }}</td>
                             <td>
-                                <a href="{{ route('videos.index',['fk_chapter='.$val->id]) }}" class="btn btn-primary btn-sm btn-equal">
-                                    <i class="fas fa-plus"></i> 
-                                </a>
-                                <a href="{{ route('chapters.details',[$val->id]) }}" class="btn btn-info btn-sm btn-equal">
-                                    <i class="fas fa-eye"></i> 
-                                </a>
+                              <a href="{{ route('chapters.details',[$val->id]) }}" class="btn btn-info btn-sm btn-equal">
+                                <i class="fas fa-eye"></i> 
+                              </a>
+                              @role('admin')
+                              <a href="{{ route('videos.index',['fk_chapter='.$val->id]) }}" class="btn btn-primary btn-sm btn-equal">
+                                  <i class="fas fa-plus"></i> 
+                              </a>
                                 <a href="{{ route('chapters.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
@@ -70,6 +73,7 @@
                                   @csrf
                                   @method('delete')
                                 </form>
+                                @endrole
                             </td>
                         </tr>
                     @endforeach

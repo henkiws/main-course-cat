@@ -53,6 +53,7 @@
                           <td>{{ $val->description }}</td>
                           <td class="text-center">{{ $val->position }}</td>
                           <td>
+                              @role('admin')
                               <a href="{{ route('chapters.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                   <i class="fas fa-edit"></i> 
                               </a>
@@ -63,6 +64,7 @@
                                 @csrf
                                 @method('delete')
                               </form>
+                              @endrole
                           </td>
                       </tr>
                   @endforeach

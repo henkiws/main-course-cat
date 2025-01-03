@@ -32,6 +32,10 @@ class UserRepository
         return User::findOrFail($id);
     }
 
+    public function getUserGroup() {
+        return UserGroup::where('fk_user',auth()->user()->id)->pluck('fk_group')->toArray();
+    }
+
     public function create($request) {
         $data   = [
             "name"      => $request->get('name'),

@@ -13,16 +13,26 @@ class ModuleRecordsRepository
         return ModuleRecords::orderBy('position','ASC')->get();
     }
 
-    public function getCount() {
-        return ModuleRecords::count();
+    public function getCount($fk_group=[]) {
+        if( auth()->user()->hasRole('admin') ) {
+            return ModuleRecords::count();
+        }else{
+            $group_record = GroupRecords::whereIn('fk_group',$fk_group)->pluck('fk_record')->toArray();
+            return ModuleRecords::whereIn('id',$group_record)->count();
+        }
     }
 
     public function getDropdown($is_premium=0) {
         return ModuleRecords::orderBy('position','ASC')->pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return ModuleRecords::with(['data_group_records'])->orderBy('position','ASC')->paginate(10);
+    public function getPaginate($paginate = 10, $fk_group = []) {
+        if( auth()->user()->hasRole('admin') ) {
+            return ModuleRecords::with(['data_group_records'])->orderBy('position','ASC')->paginate(10);
+        }else{
+            $group_record = GroupRecords::whereIn('fk_group',$fk_group)->pluck('fk_record')->toArray();
+            return ModuleRecords::with(['data_group_records'])->whereIn('id',$group_record)->orderBy('position','ASC')->paginate(10);
+        }
     }
 
     public function FetchById($id) {

@@ -28,10 +28,12 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Responsive Hover Table</h3>
-
+              
+              @role('admin')
               <div class="card-tools">
                 <a href="{{ route('files.create') }}" class="btn btn-sm btn-primary">Add New File</a>
               </div>
+              @endrole
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -64,6 +66,7 @@
                                 <a href="{{ route('files.show',[$val->id]) }}" target="_blank" class="btn btn-success btn-sm btn-equal">
                                   <i class="fas fa-eye"></i>
                                 </a>
+                                @role('admin')
                                 <a href="{{ route('files.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
@@ -74,6 +77,7 @@
                                   @csrf
                                   @method('delete')
                                 </form>
+                                @endrole
                             </td>
                         </tr>
                     @endforeach

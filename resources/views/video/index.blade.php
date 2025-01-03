@@ -31,9 +31,11 @@
             <div class="card-header">
               <h3 class="card-title">Chapter: {{ $chapter->name }}</h3>
 
+              @role('admin')
               <div class="card-tools">
                 <a href="{{ route('videos.create',['fk_chapter='.$fk_chapter]) }}" class="btn btn-sm btn-primary">Add New Video Chapter</a>
               </div>
+              @endrole
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -59,6 +61,7 @@
                             <td>{{ $val->date_class }}</td>
                             <td>{{ $val->tutor }}</td>
                             <td>
+                                @role('admin')
                                 <a href="{{ route('videos.edit',[$val->id,'fk_chapter='.$fk_chapter]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
@@ -69,6 +72,7 @@
                                   @csrf
                                   @method('delete')
                                 </form>
+                                @endrole
                             </td>
                         </tr>
                     @endforeach

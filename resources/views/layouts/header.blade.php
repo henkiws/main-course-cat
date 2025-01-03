@@ -14,7 +14,7 @@
       <!--begin::End Navbar Links-->
       <ul class="navbar-nav ms-auto">
         <!--begin::Notifications Dropdown Menu-->
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
           <a class="nav-link" data-bs-toggle="dropdown" href="#">
             <i class="bi bi-bell-fill"></i>
             <span class="navbar-badge badge text-bg-warning">15</span>
@@ -39,7 +39,7 @@
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
           </div>
-        </li>
+        </li> --}}
         <!--end::Notifications Dropdown Menu-->
         <!--begin::Fullscreen Toggle-->
         <li class="nav-item">
@@ -57,7 +57,7 @@
               class="user-image rounded-circle shadow"
               alt="User Image"
             />
-            <span class="d-none d-md-inline">Alexander Pierce</span>
+            <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
             <!--begin::User Image-->
@@ -68,8 +68,8 @@
                 alt="User Image"
               />
               <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2023</small>
+                {{ auth()->user()->name }}
+                <small>Member since {{ \Carbon\Carbon::parse(auth()->user()->created_at)->format('M Y') }}</small>
               </p>
             </li>
             <!--end::User Image-->

@@ -13,6 +13,8 @@ class ChapterVideoController extends Controller
                                 ChaptersRepository $ChaptersRepository) {
         $this->ChapterVideosRepository = $ChapterVideosRepository;
         $this->ChaptersRepository = $ChaptersRepository;
+
+        $this->middleware(['role:admin'], ['except' => ['index']]);
     }
 
     public function index(Request $request) {

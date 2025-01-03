@@ -10,6 +10,8 @@ class ModuleController extends Controller
 {
     public function __construct(ModulesRepository $ModulesRepository) {
         $this->ModulesRepository = $ModulesRepository;
+
+        $this->middleware(['role:admin'], ['except' => ['index']]);
     }
 
     public function index() {

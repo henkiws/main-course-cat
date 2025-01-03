@@ -29,9 +29,11 @@
             <div class="card-header">
               <h3 class="card-title">Responsive Hover Table</h3>
 
+              @role('admin')
               <div class="card-tools">
                 <a href="{{ route('modules.create') }}" class="btn btn-sm btn-primary">Add New Module</a>
               </div>
+              @endrole
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -56,6 +58,7 @@
                                 <a href="{{ route('chapters.show',[$val->id]) }}" class="btn btn-info btn-sm btn-custom btn-equal">
                                     <i class="fas fa-eye"></i> 
                                 </a>
+                                @role('admin')
                                 <a href="{{ route('modules.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
@@ -66,6 +69,7 @@
                                   @csrf
                                   @method('delete')
                                 </form>
+                                @endrole
                             </td>
                         </tr>
                     @empty

@@ -13,6 +13,8 @@ class GroupController extends Controller
                             UserRepository $UserRepository) {
         $this->GroupRepository = $GroupRepository;
         $this->UserRepository = $UserRepository;
+
+        $this->middleware(['role:admin']);
     }
 
     public function index() {
