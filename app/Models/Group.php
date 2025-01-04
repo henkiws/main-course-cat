@@ -10,7 +10,7 @@ class Group extends Model
     use HasFactory;
 
     protected $table = 'groups';
-    protected $fillable = ['name','description','image','active','created_by'];
+    protected $fillable = ['name','description','image','fk_cbt_group','active','created_by'];
 
     public function data_group_user() {
         return $this->hasMany(UserGroup::class,'fk_group','id');

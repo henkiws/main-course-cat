@@ -12,6 +12,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "socoladaica/laravel-table-prefix": "^1.2",
         "spatie/laravel-permission": "^5.11"
     },
     "require-dev": {

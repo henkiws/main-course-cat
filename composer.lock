@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e03f29b3b7077fe2e72af10dde06049",
+    "content-hash": "58f9fcc462ea3b1eb85804c57724d0fa",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3070,6 +3070,69 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "socoladaica/laravel-table-prefix",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocolaDaiCa/laravel-table-prefix.git",
+                "reference": "c234520952eacd3e020df42cb33e8e258c008150"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocolaDaiCa/laravel-table-prefix/zipball/c234520952eacd3e020df42cb33e8e258c008150",
+                "reference": "c234520952eacd3e020df42cb33e8e258c008150",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^9.3",
+                "vimeo/psalm": "^3.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Socoladaica\\LaravelTablePrefix\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Socola Đại Ca",
+                    "email": "SocolaDaiCa@gmail.com",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Allows you to use a table prefix with standard Laravel models",
+            "homepage": "https://github.com/socoladaica/laravel-table-prefix",
+            "keywords": [
+                "laravel-table-prefix",
+                "socoladaica"
+            ],
+            "support": {
+                "issues": "https://github.com/SocolaDaiCa/laravel-table-prefix/issues",
+                "source": "https://github.com/SocolaDaiCa/laravel-table-prefix/tree/1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/spatie",
+                    "type": "github"
+                },
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "other"
+                }
+            ],
+            "time": "2023-02-08T14:10:31+00:00"
         },
         {
             "name": "spatie/laravel-permission",

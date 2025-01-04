@@ -44,6 +44,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Assigned to</th>
+                    <th class="text-center">Synced</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -58,6 +59,7 @@
                                 {{ $v->data_user->name.',' }}
                               @endforeach
                             </td>
+                            <td class="text-center">{!! $val->fk_cbt_group > 0 ? "<span class='badge bg-success'>Yes</span>" : "<span class='badge bg-danger'>No</span>" !!}</td>
                             <td>
                                 @role('admin')
                                 <a href="{{ route('groups.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">

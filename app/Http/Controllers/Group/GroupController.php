@@ -55,7 +55,7 @@ class GroupController extends Controller
             return redirect()->route('groups.index');
         }else{
             session()->flash('error', $result['msg']);
-            return redirect()->back()->withInput();
+            return redirect()->back()->withErrors($result['msg']);
         }
     }
 
@@ -72,7 +72,7 @@ class GroupController extends Controller
             return redirect()->route('groups.index');
         }else{
             session()->flash('error', $result['msg']);
-            return redirect()->back()->withInput();
+            return redirect()->back()->withErrors($result['msg']);
         }
     }
 

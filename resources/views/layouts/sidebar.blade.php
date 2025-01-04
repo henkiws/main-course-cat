@@ -5,14 +5,14 @@
       <!--begin::Brand Link-->
       <a href="./index.html" class="brand-link">
         <!--begin::Brand Image-->
-        <img
+        {{-- <img
           src="{{ asset('/') }}assets/img/AdminLTELogo.png"
           alt="AdminLTE Logo"
           class="brand-image opacity-75 shadow"
-        />
+        /> --}}
         <!--end::Brand Image-->
         <!--begin::Brand Text-->
-        <span class="brand-text fw-light">AdminLTE 4</span>
+        <span class="brand-text fw-light">E-COURSES</span>
         <!--end::Brand Text-->
       </a>
       <!--end::Brand Link-->
