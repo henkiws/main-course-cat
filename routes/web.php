@@ -80,4 +80,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/files', [App\Http\Controllers\File\FileController::class, 'store'])->name('files.store');
     Route::put('/files/{id}', [App\Http\Controllers\File\FileController::class, 'update'])->name('files.update');
     Route::delete('/files/{id}', [App\Http\Controllers\File\FileController::class, 'destroy'])->name('files.destroy');
+
+    Route::get('/cert', [App\Http\Controllers\Cert\CertificateController::class, 'index'])->name('cert.index');
+    Route::get('/cert/create', [App\Http\Controllers\Cert\CertificateController::class, 'create'])->name('cert.create');
+    Route::get('/cert/show/{id}', [App\Http\Controllers\Cert\CertificateController::class, 'show'])->name('cert.show');
+    Route::get('/cert/{id}/edit', [App\Http\Controllers\Cert\CertificateController::class, 'edit'])->name('cert.edit');
+    Route::post('/cert', [App\Http\Controllers\Cert\CertificateController::class, 'store'])->name('cert.store');
+    Route::put('/cert/{id}', [App\Http\Controllers\Cert\CertificateController::class, 'update'])->name('cert.update');
+    Route::delete('/cert/{id}', [App\Http\Controllers\Cert\CertificateController::class, 'destroy'])->name('cert.destroy');
 });

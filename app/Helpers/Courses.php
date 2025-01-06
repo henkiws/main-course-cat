@@ -16,4 +16,11 @@
         }
     }
 
+    if (! function_exists('getCBTName')) {
+        function getCBTName($id) {
+            $result = \App\Models\CAT\CATTest::where('tes_id',$id)->first();
+            return $result->tes_nama??'';
+        }
+    }
+
 ?>
