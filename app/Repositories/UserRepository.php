@@ -2,6 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Repositories\CAT\CATStudentRepository;
+use App\Repositories\CAT\CATUserRepository;
+use App\Repositories\GroupRepository;
 use App\Models\User;
 use App\Models\UserGroup;
 use DB;
@@ -11,6 +14,13 @@ use Hash;
 
 class UserRepository
 {
+    public function __construct(CATStudentRepository $CATStudentRepository,
+                                CATUserRepository $CATUserRepository,
+                                GroupRepository $GroupRepository) {
+        $this->CATStudentRepository = $CATStudentRepository;
+        $this->CATUserRepository = $CATUserRepository;
+        $this->GroupRepository = $GroupRepository;
+    }
     
     public function getAll() {
         return User::with(['data_user_group.data_group'])->get();
@@ -37,60 +47,236 @@ class UserRepository
     }
 
     public function create($request) {
-        $data   = [
-            "name"      => $request->get('name'),
-            'email'     => $request->get('email'),
-            'email_verified_at'     => Carbon::now(),
-            'password'  => Hash::make($request->get('password')),
-            'remember_token' => Str::random(40)
-        ];
+        DB::beginTransaction();
+        try {
+            $data   = [
+                "name"      => $request->get('name'),
+                'email'     => $request->get('email'),
+                'email_verified_at'     => Carbon::now(),
+                'password'  => Hash::make($request->get('password')),
+                'remember_token' => Str::random(40)
+            ];
 
-        $User   = User::create($data);
+            $User   = User::create($data);
 
-        $User->assignRole($request->get('role'));
+            $User->assignRole($request->get('role'));
 
-        UserGroup::create([
-            "fk_user" => $User->id,
-            "fk_group" => $request->get('fk_group')
-        ]);
-       
-        return [
-            "status"    => "success",
-            "msg"       => "Data has been saved successfully!",
-            "data"      => []
-        ];
+            UserGroup::create([
+                "fk_user" => $User->id,
+                "fk_group" => $request->get('fk_group')
+            ]);
+
+            $group = $this->GroupRepository->FetchById($request->get('fk_group'));
+
+            if( $group->fk_cbt_group > 0 ) {
+                if($request->get('role') == "admin") {
+                    $data_array   = [
+                        "username"      => $request->get('email'),
+                        "password"      => $request->get('password'),
+                        "nama"      => $request->get('name'),
+                        "opsi1"      => '-',
+                        "opsi2"      => '-',
+                        "keterangan"      => '-',
+                        "level"      => 'admin',
+                    ];
+                    $newReq = new \Illuminate\Http\Request($data_array);
+                    $result_admin = $this->CATUserRepository->create($newReq);
+
+                    if( $result_admin['status'] == "success" ) {
+
+                        $User->update([
+                            "fk_cbt_user" => $result_admin['data']->id
+                        ]);
+        
+                        DB::commit();
+                        return [
+                            "status"    => "success",
+                            "msg"       => "Data has been saved successfully!",
+                            "data"      => []
+                        ];
+                    }else{
+                        DB::rollback();
+                        return [
+                            "status"    => "error",
+                            "msg"       => $result_admin['msg'],
+                            "data"      => []
+                        ];
+                    }
+
+                }else{ // student
+                    $data_array   = [
+                        "user_grup_id"      => $group->fk_cbt_group,
+                        "user_name"      => $request->get('email'),
+                        "user_password"      => $request->get('password'),
+                        "user_email"      => $request->get('email'),
+                        "user_regdate"      => Carbon::now(),
+                        "user_ip"      => null,
+                        "user_firstname"      => $request->get('name'),
+                        "user_birthdate"      => null,
+                        "user_birthplace"      => null,
+                        "user_level"      => 1,
+                        "user_detail"      => null,
+                    ];
+                    $newReq = new \Illuminate\Http\Request($data_array);
+                    $result_student = $this->CATStudentRepository->create($newReq);
+
+                    if( $result_student['status'] == "success" ) {
+
+                        $User->update([
+                            "fk_cbt_student" => $result_student['data']->user_id
+                        ]);
+        
+                        DB::commit();
+                        return [
+                            "status"    => "success",
+                            "msg"       => "Data has been saved successfully!",
+                            "data"      => []
+                        ];
+                    }else{
+                        DB::rollback();
+                        return [
+                            "status"    => "error",
+                            "msg"       => $result_student['msg'],
+                            "data"      => []
+                        ];
+                    }
+                }
+            }
+            
+            DB::commit();
+            return [
+                "status"    => "success",
+                "msg"       => "Data has been saved successfully!",
+                "data"      => []
+            ];
+        }catch (\Exception $e) {
+            DB::rollback();
+            return [
+                "status"    => "error",
+                "msg"       => $e->getMessage(),
+                "data"      => []
+            ];
+        } 
     }
 
     public function update($id, $request)
     {
-        $data   = [
-            "name"      => $request->get('name'),
-            'email'     => $request->get('email')
-        ];
+        DB::beginTransaction();
+        try {
+            $data   = [
+                "name"      => $request->get('name'),
+                'email'     => $request->get('email')
+            ];
 
-        if( !empty($request->get('password')) ) {
-            $data['password'] = $request->get('password');
-        }
+            if( !empty($request->get('password')) ) {
+                $data['password'] = $request->get('password');
+            }
 
-        $User   = User::find($id);
-        $User->update($data);
+            $User   = User::find($id);
+            $User->update($data);
 
-        $User->assignRole($request->get('role'));
+            $User->assignRole($request->get('role'));
 
-        UserGroup::updateOrCreate(
-            [
-                "fk_user" => $User->id,
-            ],
-            [
-                "fk_group" => $request->get('fk_group')
-            ]
-        );
+            UserGroup::updateOrCreate(
+                [
+                    "fk_user" => $User->id,
+                ],
+                [
+                    "fk_group" => $request->get('fk_group')
+                ]
+            );
 
-        return [
-            "status"    => "success",
-            "msg"       => "Data has been saved successfully!",
-            "data"      => []
-        ];
+            $group = $this->GroupRepository->FetchById($request->get('fk_group'));
+
+            if( $group->fk_cbt_group > 0 ) {
+                if($request->get('role') == "admin") {
+                    $data_array   = [
+                        "username"      => $request->get('email'),
+                        "password"      => $request->get('password'),
+                        "nama"      => $request->get('name'),
+                        "opsi1"      => '-',
+                        "opsi2"      => '-',
+                        "keterangan"      => '-',
+                        "level"      => 'admin',
+                    ];
+                    $newReq = new \Illuminate\Http\Request($data_array);
+                    $result_admin = $this->CATUserRepository->update($User->fk_cbt_user,$newReq);
+
+                    if( $result_admin['status'] == "success" ) {
+
+                        $User->update([
+                            "fk_cbt_user" => $result_admin['data']->id
+                        ]);
+        
+                        DB::commit();
+                        return [
+                            "status"    => "success",
+                            "msg"       => "Data has been saved successfully!",
+                            "data"      => []
+                        ];
+                    }else{
+                        DB::rollback();
+                        return [
+                            "status"    => "error",
+                            "msg"       => $result_admin['msg'],
+                            "data"      => []
+                        ];
+                    }
+
+                }else{ // student
+                    $data_array   = [
+                        "user_grup_id"      => $group->fk_cbt_group,
+                        "user_name"      => $request->get('email'),
+                        "user_password"      => $request->get('password'),
+                        "user_email"      => $request->get('email'),
+                        "user_regdate"      => Carbon::now(),
+                        "user_ip"      => null,
+                        "user_firstname"      => $request->get('name'),
+                        "user_birthdate"      => null,
+                        "user_birthplace"      => null,
+                        "user_level"      => 1,
+                        "user_detail"      => null,
+                    ];
+                    $newReq = new \Illuminate\Http\Request($data_array);
+                    $result_student = $this->CATStudentRepository->update($User->fk_cbt_student,$newReq);
+
+                    if( $result_student['status'] == "success" ) {
+
+                        $User->update([
+                            "fk_cbt_student" => $result_student['data']->user_id
+                        ]);
+        
+                        DB::commit();
+                        return [
+                            "status"    => "success",
+                            "msg"       => "Data has been saved successfully!",
+                            "data"      => []
+                        ];
+                    }else{
+                        DB::rollback();
+                        return [
+                            "status"    => "error",
+                            "msg"       => $result_student['msg'],
+                            "data"      => []
+                        ];
+                    }
+                }
+            }
+
+            DB::commit();
+            return [
+                "status"    => "success",
+                "msg"       => "Data has been saved successfully!",
+                "data"      => []
+            ];
+        }catch (\Exception $e) {
+            DB::rollback();
+            return [
+                "status"    => "error",
+                "msg"       => $e->getMessage(),
+                "data"      => []
+            ];
+        } 
     }
 
     public function delete($id) {

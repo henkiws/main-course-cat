@@ -27,7 +27,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Responsive Hover Table</h3>
+              <h3 class="card-title"></h3>
 
               @role('admin')
               <div class="card-tools">
@@ -45,6 +45,7 @@
                     <th>Name</th>
                     <th>Role</th>
                     <th>Group</th>
+                    <th>Synced</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -60,6 +61,7 @@
                             <td>
                                 {{ $val->data_user_group->data_group->name??'' }}
                             </td>
+                            <td>{!! $val->fk_cbt_user > 0 || $val->fk_cbt_student > 0 ? "<span class='badge bg-success'>Yes</span>" : "<span class='badge bg-danger'>No</span>" !!}</td>
                             <td>
                                 @if( $val->roles->pluck("name")->first() != "admin" )
                                 <a href="{{ route('users.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
