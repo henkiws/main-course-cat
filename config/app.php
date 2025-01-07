@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'exam_url' => env('URL_EXAM_CAT','http://localhost:8005/'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

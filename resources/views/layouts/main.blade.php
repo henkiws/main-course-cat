@@ -49,6 +49,13 @@
       crossorigin="anonymous"
     />
 
+    <style>
+      .flex{
+        display: flex;
+        justify-content: end;
+      }
+    </style>
+
     @stack('css')
   </head>
   <!--end::Head-->
@@ -104,17 +111,7 @@
               theme: Default.scrollbarTheme,
               autoHide: Default.scrollbarAutoHide,
               clickScroll: Default.scrollbarClickScroll,
-            },
-          });
-        }
-      });
-    </script>
-    <!--end::OverlayScrollbars Configure-->
-    <!-- OPTIONAL SCRIPTS -->
-    <!-- sortablejs -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
-      integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ="
+            },paginationmVae0iJuiR+6OqHJHQ="
       crossorigin="anonymous"
     ></script>
     <!-- sortablejs -->
