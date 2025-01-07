@@ -66,8 +66,8 @@
                               @endphp
                             </td>
                             <td>
-                                <a href="{{ route('cert.show',[$val->id]) }}" target="_blank" class="btn btn-success btn-sm btn-equal">
-                                  <i class="fas fa-eye"></i>
+                                <a href="{{ route('cert.users',[$val->id]) }}" class="btn btn-success btn-sm btn-equal">
+                                  <i class="fas fa-users"></i>
                                 </a>
                                 @role('admin')
                                 <a href="{{ route('cert.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">

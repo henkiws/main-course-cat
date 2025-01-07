@@ -15,4 +15,8 @@ class CATTestUser extends Model
     protected $fillable = ['tesuser_tes_id','tesuser_user_id','tesuser_status','tesuser_creation_time','tesuser_comment','tesuser_token'];
     public $primaryKey = 'tesuser_id';
     public $timestamps = false;
+
+    public function data_cbt_user() {
+        return $this->hasOne(CATPeserta::class,'user_id','tesuser_user_id');
+    }
 }

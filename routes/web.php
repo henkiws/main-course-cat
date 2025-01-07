@@ -82,6 +82,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/files/{id}', [App\Http\Controllers\File\FileController::class, 'destroy'])->name('files.destroy');
 
     Route::get('/cert', [App\Http\Controllers\Cert\CertificateController::class, 'index'])->name('cert.index');
+    Route::get('/cert/users', [App\Http\Controllers\Cert\CertificateController::class, 'certificate'])->name('cert.user.index');
+    Route::get('/cert/{id}/users', [App\Http\Controllers\Cert\CertificateController::class, 'users'])->name('cert.users');
+    Route::get('/cert/{fk_cert}/{fk_user}/generate', [App\Http\Controllers\Cert\CertificateController::class, 'generate'])->name('cert.generate');
     Route::get('/cert/create', [App\Http\Controllers\Cert\CertificateController::class, 'create'])->name('cert.create');
     Route::get('/cert/show/{id}', [App\Http\Controllers\Cert\CertificateController::class, 'show'])->name('cert.show');
     Route::get('/cert/{id}/edit', [App\Http\Controllers\Cert\CertificateController::class, 'edit'])->name('cert.edit');

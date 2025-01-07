@@ -9,12 +9,15 @@
         "barryvdh/laravel-dompdf": "^2.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "iio/libmergepdf": "^4.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "lynx39/lara-pdf-merger": "*",
         "socoladaica/laravel-table-prefix": "^1.2",
-        "spatie/laravel-permission": "^5.11"
+        "spatie/laravel-permission": "^5.11",
+        "webklex/laravel-pdfmerger": "^1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

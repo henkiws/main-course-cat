@@ -6,21 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\CertificateRepository;
 use App\Repositories\GroupRepository;
+use App\Repositories\UserCertificateRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\CAT\CATTestRepository;
+use App\Repositories\CAT\CATTestUserRepository;
 
 class CertificateController extends Controller
 {
     public function __construct(CertificateRepository $CertificateRepository,
                                 GroupRepository $GroupRepository,
                                 CATTestRepository $CATTestRepository,
+                                CATTestUserRepository $CATTestUserRepository,
+                                UserCertificateRepository $UserCertificateRepository,
                                 UserRepository $UserRepository) {
         $this->CertificateRepository = $CertificateRepository;
         $this->GroupRepository = $GroupRepository;
         $this->CATTestRepository = $CATTestRepository;
+        $this->CATTestUserRepository = $CATTestUserRepository;
+        $this->UserCertificateRepository = $UserCertificateRepository;
         $this->UserRepository = $UserRepository;
 
-        $this->middleware(['role:admin'], ['except' => ['index','show']]);
+        $this->middleware(['role:admin'], ['except' => ['index','show','certificate']]);
     }
 
     public function index() {
@@ -29,6 +35,29 @@ class CertificateController extends Controller
             "list" => $this->CertificateRepository->getPaginate(10,$user_group),
         ];
         return view('cert.index', $data);
+    }
+
+    public function users($id) {
+        $cert   = $this->CertificateRepository->FetchById($id);
+        $list = $this->CATTestUserRepository->getPaginate(10, $cert->details);
+        $data = [
+            "cert" => $cert,
+            "list" => $list
+        ];
+        return view('cert.users', $data);
+    }
+
+    public function generate($fk_cert, $fk_user) {
+        $pdf_cert = $this->UserCertificateRepository->generateCert($fk_cert, $fk_user);
+        return redirect()->route('cert.users',[$fk_cert]);
+    }
+
+    public function certificate() {
+        $data   = [
+            "list" => $this->UserCertificateRepository->getPaginate(),
+        ];
+
+        return view('cert.certificate', $data);
     }
 
     public function create() {

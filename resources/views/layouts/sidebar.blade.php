@@ -52,6 +52,14 @@
               <p>Bahan Ajar Tutor</p>
             </a>
           </li>
+          @role('peserta')
+          <li class="nav-item">
+            <a href="{{ route('cert.user.index') }}" class="nav-link @if(Route::is('cert.*') ) active @endif">
+              <i class="nav-icon bi bi-palette"></i>
+              <p>E-Sertifikat</p>
+            </a>
+          </li>
+          @endrole
           @role('admin')
           <li class="nav-item">
             <a href="{{ route('groups.index') }}" class="nav-link @if(Route::is('groups.*') ) active @endif">

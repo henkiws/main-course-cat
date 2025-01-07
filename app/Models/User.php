@@ -25,7 +25,8 @@ class User extends Authenticatable
         'remember_token',
         'email_verified_at',
         'fk_cbt_user',
-        'fk_cbt_student'
+        'fk_cbt_student',
+        'avatar'
     ];
 
     /**

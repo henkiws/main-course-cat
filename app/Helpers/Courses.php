@@ -23,4 +23,25 @@
         }
     }
 
+    if (! function_exists('alreadyTest')) {
+        function alreadyTest($test_id,$user_id) {
+            $result = \App\Models\CAT\CATTestUser::where('tesuser_tes_id',$test_id)->where('tesuser_user_id',$user_id)->first();
+            return isset($result->tesuser_id)?true:false;
+        }
+    }
+
+    if (! function_exists('alreadyGeneratedCert')) {
+        function alreadyGeneratedCert($fk_cert,$fk_user) {
+            $result = \App\Models\UserCertificates::where('fk_user',$fk_user)->where('fk_certificate',$fk_cert)->first();
+            return isset($result->id)?true:false;
+        }
+    }
+
+    if (! function_exists('pathDownloadCert')) {
+        function pathDownloadCert($fk_cert,$fk_user) {
+            $result = \App\Models\UserCertificates::where('fk_user',$fk_user)->where('fk_certificate',$fk_cert)->first();
+            return asset($result->path);
+        }
+    }
+
 ?>
