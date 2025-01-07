@@ -81,6 +81,10 @@ class CATStudentRepository
                 "user_detail"      => $request->get('user_detail'),
             ];
 
+            if( !empty($request->get('user_password')) ) {
+                $data['user_password'] = $request->get('user_password');
+            }
+
             $Group   = CATPeserta::find($id);
             $Group->update($data);
 

@@ -91,4 +91,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cert', [App\Http\Controllers\Cert\CertificateController::class, 'store'])->name('cert.store');
     Route::put('/cert/{id}', [App\Http\Controllers\Cert\CertificateController::class, 'update'])->name('cert.update');
     Route::delete('/cert/{id}', [App\Http\Controllers\Cert\CertificateController::class, 'destroy'])->name('cert.destroy');
+
+    Route::get('/profile', [App\Http\Controllers\User\ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/{id}', [App\Http\Controllers\User\ProfileController::class, 'update'])->name('profile.update');
 });

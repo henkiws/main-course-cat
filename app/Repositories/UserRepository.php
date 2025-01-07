@@ -11,9 +11,12 @@ use DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Hash;
+use App\Traits\FileUploadTrait;
 
 class UserRepository
 {
+    use FileUploadTrait;
+
     public function __construct(CATStudentRepository $CATStudentRepository,
                                 CATUserRepository $CATUserRepository,
                                 GroupRepository $GroupRepository) {
@@ -39,7 +42,7 @@ class UserRepository
     }
 
     public function FetchById($id) {
-        return User::findOrFail($id);
+        return User::with(['data_user_group.data_group'])->findOrFail($id);
     }
 
     public function getUserGroup() {
@@ -169,7 +172,15 @@ class UserRepository
             ];
 
             if( !empty($request->get('password')) ) {
-                $data['password'] = $request->get('password');
+                $data['password'] = Hash::make($request->get('password'));
+            }
+
+            if( $request->avatar ) {
+                $avatar   = $request->avatar;
+                $folder = 'avatars';
+                $res    = $this->uploadFileOnly($avatar,$folder);
+    
+                $data['avatar']   = $res['path'];
             }
 
             $User   = User::find($id);
