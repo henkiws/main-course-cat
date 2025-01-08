@@ -99,7 +99,7 @@
                     <div class="certificate-content">
                         <div class="text-center">
                             <p>telah menyelesaikan program pelatihan <b>{{ ucwords($data->data_certificate->name) }}</b> Batch {{ $data->data_certificate->batch }}</p>
-                            <p>pada tanggal <i>{{ \Carbon\Carbon::parse($data->start_date)->format('d M Y') }}</i> s.d. <i>{{ \Carbon\Carbon::parse($data->end_date)->format('d M Y') }}</i> dan dinyatakan telah memiliki keahlian di bidang kepabeanan.</p>
+                            <p>pada tanggal <i>{{ \Carbon\Carbon::parse($data->data_certificate->start_date)->format('d M Y') }}</i> s.d. <i>{{ \Carbon\Carbon::parse($data->data_certificate->end_date)->format('d M Y') }}</i> dan dinyatakan telah memiliki keahlian di bidang kepabeanan.</p>
                         </div>
                     </div>
                     <div class="certificate-footer text-muted">

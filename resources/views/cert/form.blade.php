@@ -45,19 +45,27 @@
                     
                     <div class="form-group">
                       <label for="title">Title</label>
-                      <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="{{ isset($cert->id) ? $cert->title : old('title')  }}">
+                      <input type="text" class="form-control" required id="title" name="title" placeholder="Enter title" value="{{ isset($cert->id) ? $cert->title : old('title')  }}">
                     </div>
                     <div class="form-group">
                       <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ isset($cert->id) ? $cert->name : old('name')  }}">
+                      <input type="text" class="form-control" required id="name" name="name" placeholder="Enter name" value="{{ isset($cert->id) ? $cert->name : old('name')  }}">
                     </div>
                     <div class="form-group">
                       <label for="batch">Batch</label>
-                      <input type="text" class="form-control" id="batch" name="batch" placeholder="Enter batch" value="{{ isset($cert->id) ? $cert->batch : old('batch')  }}">
+                      <input type="text" class="form-control" required id="batch" name="batch" placeholder="Enter batch" value="{{ isset($cert->id) ? $cert->batch : old('batch')  }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="start_date">Start Date</label>
+                      <input type="date" class="form-control" required id="start_date" name="start_date" placeholder="Enter start date" value="{{ isset($cert->start_date) ? \Carbon\Carbon::parse($cert->start_date)->format('Y-m-d') : old('start_date')  }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="end_date">End Date</label>
+                      <input type="date" class="form-control" required id="end_date" name="end_date" placeholder="Enter end date" value="{{ isset($cert->end_date) ? \Carbon\Carbon::parse($cert->end_date)->format('Y-m-d') : old('end_date')  }}">
                     </div>
                     <div class="form-group">
                       <label for="name">CBT</label>
-                      <select class="form-control" name="details[]" multiple>
+                      <select class="form-control" required name="details[]" multiple>
                           @foreach($opt_cbt_test as $key => $val)
                           <option value="{{ $key }}" 
                             @isset($cert->id)

@@ -10,5 +10,5 @@ class Certificates extends Model
     use HasFactory;
 
     protected $table = 'certificates';
-    protected $fillable = ['ref','title','name','batch','details','created_by'];
+    protected $fillable = ['ref','title','name','batch','details','created_by','start_date','end_date'];
 }

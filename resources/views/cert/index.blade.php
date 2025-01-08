@@ -61,6 +61,8 @@
                     <th>Title</th>
                     <th>Name</th>
                     <th>Batch</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                     <th>CBT</th>
                     <th>Action</th>
                   </tr>
@@ -72,6 +74,8 @@
                             <td>{{ $val->title }}</td>
                             <td>{{ $val->name }}</td>
                             <td>{{ $val->batch }}</td>
+                            <td>{{ \Carbon\Carbon::parse($val->start_date)->format('d M Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($val->end_date)->format('d M Y') }}</td>
                             <td>
                               @php
                                 $toArray = json_decode($val->details);

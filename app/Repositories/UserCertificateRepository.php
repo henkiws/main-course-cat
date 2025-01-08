@@ -49,6 +49,7 @@ class UserCertificateRepository
 
             $count = UserCertificates::count();
             $ref = str_pad(($count+1), 5, "0", STR_PAD_LEFT).'-'.$cert->batch.'-'.date('Y');
+            $filename = $ref.'_'.date('YmdHis').'.pdf';
             $data_array = [
                 "fk_user"      => $user->id,
                 "fk_certificate"      => $cert->id,
@@ -58,7 +59,7 @@ class UserCertificateRepository
                 "expired_date"      => null,
                 "certificate_date"      => Carbon::now(),
                 "status"      => 1,
-                "path"      => 'data/cert/cert_&_transkip_'.$cert->id.'.pdf',
+                "path"      => 'data/cert/'.$filename,
                 "created_by"      => auth()->user()->id,
             ];
             $newReq = new \Illuminate\Http\Request($data_array);
@@ -72,28 +73,27 @@ class UserCertificateRepository
                 $pdf1 = \App::make('dompdf.wrapper');
                 $pdf1->getDomPDF()->set_option("enable_php", true);
                 $html_cert 	= view('cert.pdf_cert', $data)->render();
-                // $result_cert = $pdf1->loadHtml($html_cert)->setPaper('a4', 'landscape')->setWarnings(false)->save(base_path() . '/public/data/cert/cert_'.$cert->id.'.pdf');
+                // $result_cert = $pdf1->loadHtml($html_cert)->setPaper('a4', 'landscape')->setWarnings(false)->save(base_path() . '/public/data/cert/cert_'.$filename.'.pdf');
                 $result_cert = $pdf1->loadHtml($html_cert)->setPaper('a4', 'landscape')->setWarnings(false)->output();
     
                 $pdf = \App::make('dompdf.wrapper');
                 $pdf->getDomPDF()->set_option("enable_php", true);
                 $html_transkip 	= view('cert.pdf_transkip', $data)->render();
-                // $result_transkip = $pdf->loadHtml($html_transkip)->setPaper('a4', 'portrait')->setWarnings(false)->save(base_path() . '/public/data/cert/transkip_'.$cert->id.'.pdf');
+                // $result_transkip = $pdf->loadHtml($html_transkip)->setPaper('a4', 'portrait')->setWarnings(false)->save(base_path() . '/public/data/cert/transkip_'.$filename.'.pdf');
                 $result_transkip = $pdf->loadHtml($html_transkip)->setPaper('a4', 'portrait')->setWarnings(false)->output();
     
                 $merger->addRaw($result_cert);
                 $merger->addRaw($result_transkip);
                 
                 $mergedPdf = $merger->merge();
-                DB::commit();
+                Storage::disk('public_html')->put('data/cert/'.$filename, $mergedPdf);
 
-                $headers = [
-                    'Content-Type' => 'application/pdf'
-                ];
-                return response()->streamDownload(function () use ($cert, $mergedPdf)  { 
-                    Storage::disk('public_html')->put('data/cert/cert_&_transkip_'.$cert->id.'.pdf', $mergedPdf);
+                DB::commit();
+                return response()->streamDownload(function () use ($mergedPdf)  { 
                     echo $mergedPdf;
-                }, 'cert_&_transkip_'.$cert->id.'.pdf', $headers);
+                }, $filename, [
+                    'Content-Type' => 'application/pdf'
+                ]);
 
                 
             }else{
