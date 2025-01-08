@@ -21,16 +21,28 @@ class ChapterController extends Controller
     }
 
     public function index(Request $request) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['name'] = $request->get('q');
+        }
+
         $data = [
-            "list" => $this->ChaptersRepository->getPaginate(),
+            "list" => $this->ChaptersRepository->getPaginate($pagination, $search),
         ];
         return view('chapters.index', $data);
     }
 
-    public function show($fk_module) {
+    public function show(Request $request, $fk_module) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['name'] = $request->get('q');
+        }
+
         $data = [
             "module" => $this->ModulesRepository->FetchById($fk_module),
-            "list" => $this->ChaptersRepository->getPaginateByModule($fk_module),
+            "list" => $this->ChaptersRepository->getPaginateByModule($fk_module, $pagination, $search),
         ];
         return view('chapters.show', $data);
     }

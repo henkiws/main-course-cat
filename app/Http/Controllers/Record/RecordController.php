@@ -20,10 +20,16 @@ class RecordController extends Controller
         $this->middleware(['role:admin'], ['except' => ['index','show']]);
     }
 
-    public function index() {
-        $user_group = $this->UserRepository->getUserGroup();
+    public function index(Request $request) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['title'] = $request->get('q');
+        }
+
+        $user_group = $this->UserRepository->getUserGroup(10);
         $data = [
-            "list" => $this->ModuleRecordsRepository->getPaginate(10,$user_group),
+            "list" => $this->ModuleRecordsRepository->getPaginate($pagination,$search,$user_group),
         ];
         return view('records.index', $data);
     }

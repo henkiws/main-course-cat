@@ -25,8 +25,15 @@ class GroupRepository
         return Group::pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return Group::with(['data_group_user'])->paginate(10);
+    public function getPaginate($paginate = 10, $search = []) {
+        $query =  Group::with(['data_group_user']);
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->paginate($paginate);
     }
 
     public function FetchById($id) {

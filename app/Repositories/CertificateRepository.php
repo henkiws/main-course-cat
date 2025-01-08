@@ -17,8 +17,15 @@ class CertificateRepository
         return Certificates::pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return Certificates::paginate(10);
+    public function getPaginate($paginate = 10, $search = []) {
+        $query =  Certificates::query();
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->paginate($paginate);
     }
 
     public function FetchById($id) {

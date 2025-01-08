@@ -29,17 +29,29 @@ class CertificateController extends Controller
         $this->middleware(['role:admin'], ['except' => ['index','show','certificate']]);
     }
 
-    public function index() {
+    public function index(Request $request) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['name'] = $request->get('q');
+        }
+
         $user_group = $this->UserRepository->getUserGroup();
         $data = [
-            "list" => $this->CertificateRepository->getPaginate(10,$user_group),
+            "list" => $this->CertificateRepository->getPaginate($pagination,$search,$user_group),
         ];
         return view('cert.index', $data);
     }
 
-    public function users($id) {
+    public function users(Request $request, $id) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['name'] = $request->get('q');
+        }
+
         $cert   = $this->CertificateRepository->FetchById($id);
-        $list = $this->CATTestUserRepository->getPaginate(10, $cert->details);
+        $list = $this->CATTestUserRepository->getPaginate($pagination, $search, $cert->details);
         $data = [
             "cert" => $cert,
             "list" => $list
@@ -52,9 +64,15 @@ class CertificateController extends Controller
         return redirect()->route('cert.users',[$fk_cert]);
     }
 
-    public function certificate() {
+    public function certificate(Request $request) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['title'] = $request->get('q');
+        }
+
         $data   = [
-            "list" => $this->UserCertificateRepository->getPaginate(),
+            "list" => $this->UserCertificateRepository->getPaginate($pagination, $search),
         ];
 
         return view('cert.certificate', $data);

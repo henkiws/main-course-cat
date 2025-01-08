@@ -20,12 +20,17 @@ class UserCertificateRepository
         return UserCertificates::get();
     }
 
-    public function getPaginate($paginate = 10) {
+    public function getPaginate($paginate = 10, $search = []) {
         $query = UserCertificates::with(['data_details','data_certificate','data_user']);
         if(auth()->user()->hasRole('peserta')) {
             $query->where('fk_user',auth()->user()->id);
         }
-        $result = $query->paginate(10);
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+        $result = $query->paginate($paginate);
         return $result;
     }
     public function FetchById($id) {

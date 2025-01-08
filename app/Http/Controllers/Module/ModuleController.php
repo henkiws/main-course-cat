@@ -14,9 +14,15 @@ class ModuleController extends Controller
         $this->middleware(['role:admin'], ['except' => ['index']]);
     }
 
-    public function index() {
+    public function index(Request $request) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['name'] = $request->get('q');
+        }
+
         $data = [
-            "list" => $this->ModulesRepository->getPaginate(),
+            "list" => $this->ModulesRepository->getPaginate($pagination, $search),
         ];
         return view('modules.index', $data);
     }

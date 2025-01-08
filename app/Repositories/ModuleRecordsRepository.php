@@ -26,13 +26,27 @@ class ModuleRecordsRepository
         return ModuleRecords::orderBy('position','ASC')->pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10, $fk_group = []) {
-        if( auth()->user()->hasRole('admin') ) {
-            return ModuleRecords::with(['data_group_records'])->orderBy('position','ASC')->paginate(10);
-        }else{
-            $group_record = GroupRecords::whereIn('fk_group',$fk_group)->pluck('fk_record')->toArray();
-            return ModuleRecords::with(['data_group_records'])->whereIn('id',$group_record)->orderBy('position','ASC')->paginate(10);
+    public function getPaginate($paginate = 10, $search = [], $fk_group = []) {
+        $query =  ModuleRecords::query();
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
         }
+
+        if( auth()->user()->hasRole('peserta') ) {
+            $group_record = GroupRecords::whereIn('fk_group',$fk_group)->pluck('fk_record')->toArray();
+            $query->whereIn('id',$group_record);
+        }
+
+        return $query->orderBy('position','ASC')->paginate($paginate);
+
+        // if( auth()->user()->hasRole('admin') ) {
+        //     return ModuleRecords::with(['data_group_records'])->orderBy('position','ASC')->paginate(10);
+        // }else{
+        //     $group_record = GroupRecords::whereIn('fk_group',$fk_group)->pluck('fk_record')->toArray();
+        //     return ModuleRecords::with(['data_group_records'])->whereIn('id',$group_record)->orderBy('position','ASC')->paginate(10);
+        // }
     }
 
     public function FetchById($id) {

@@ -55,7 +55,7 @@
           @role('peserta')
           <li class="nav-item">
             <a href="{{ route('cert.user.index') }}" class="nav-link @if(Route::is('cert.*') ) active @endif">
-              <i class="nav-icon bi bi-palette"></i>
+              <i class="nav-icon fas fa-stamp"></i>
               <p>E-Sertifikat</p>
             </a>
           </li>
@@ -63,13 +63,13 @@
           @role('admin')
           <li class="nav-item">
             <a href="{{ route('groups.index') }}" class="nav-link @if(Route::is('groups.*') ) active @endif">
-              <i class="nav-icon bi bi-palette"></i>
+              <i class="nav-icon fas fa-list-alt"></i>
               <p>Daftar Kelas</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('cert.index') }}" class="nav-link @if(Route::is('cert.*') ) active @endif">
-              <i class="nav-icon bi bi-palette"></i>
+              <i class="nav-icon fas fa-stamp"></i>
               <p>E-Sertifikat</p>
             </a>
           </li>

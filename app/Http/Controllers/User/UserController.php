@@ -20,9 +20,14 @@ class UserController extends Controller
         $this->middleware(['role:admin']);
     }
 
-    public function index() {
+    public function index(Request $request) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['name'] = $request->get('q');
+        }
         $data = [
-            "list" => $this->UserRepository->getPaginate(),
+            "list" => $this->UserRepository->getPaginate($pagination,$search),
         ];
         return view('users.index', $data);
     }

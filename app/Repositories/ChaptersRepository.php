@@ -16,12 +16,26 @@ class ChaptersRepository
         return Chapters::orderBy('position','ASC')->pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return Chapters::with(['data_module'])->orderBy('position','ASC')->paginate(10);
+    public function getPaginate($paginate = 10, $search = []) {
+        $query =  Chapters::with(['data_module']);
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->orderBy('position','ASC')->paginate($paginate);
     }
 
-    public function getPaginateByModule($fk_module, $paginate = 10) {
-        return Chapters::where('fk_module',$fk_module)->orderBy('position','ASC')->paginate(10);
+    public function getPaginateByModule($fk_module, $paginate = 10, $search) {
+        $query =  Chapters::with(['data_module']);
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->where('fk_module',$fk_module)->orderBy('position','ASC')->paginate($paginate);
     }
 
     public function FetchById($id) {

@@ -20,10 +20,16 @@ class FileController extends Controller
         $this->middleware(['role:admin'], ['except' => ['index','show']]);
     }
 
-    public function index() {
+    public function index(Request $request) {
+        $pagination = $request->get('show')??10;
+        $search = [];
+        if( !empty($request->get('q')) ) {
+            $search['title'] = $request->get('q');
+        }
+
         $user_group = $this->UserRepository->getUserGroup();
         $data = [
-            "list" => $this->ModuleFilesRepository->getPaginate(10, $user_group),
+            "list" => $this->ModuleFilesRepository->getPaginate($pagination, $search, $user_group),
         ];
         return view('files.index', $data);
     }

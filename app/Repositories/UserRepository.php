@@ -37,8 +37,15 @@ class UserRepository
         return User::whereNotIn('id',[1])->pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return User::with(['data_user_group.data_group'])->paginate(10);
+    public function getPaginate($paginate = 10, $search = []) {
+        $query =  User::with(['data_user_group.data_group']);
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->paginate($paginate);
     }
 
     public function FetchById($id) {

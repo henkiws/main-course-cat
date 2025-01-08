@@ -20,8 +20,15 @@ class ModulesRepository
         return Modules::orderBy('position','ASC')->pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return Modules::with(['data_chapters'])->orderBy('position','ASC')->paginate(10);
+    public function getPaginate($paginate = 10, $search = []) {
+        $query =  Modules::with(['data_chapters']);
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->orderBy('position','ASC')->paginate($paginate);
     }
 
     public function FetchById($id) {

@@ -41,14 +41,14 @@
                   <div class="col-sm-6 col-md-6">
                       <label for="show">Show: </label>
                       <select name="show" id="show">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        <option {{ request()->get('show') == 10 ? "selected" : "" }} value="10">10</option>
+                        <option {{ request()->get('show') == 20 ? "selected" : "" }} value="20">20</option>
+                        <option {{ request()->get('show') == 50 ? "selected" : "" }} value="50">50</option>
+                        <option {{ request()->get('show') == 100 ? "selected" : "" }} value="100">100</option>
                       </select>
                   </div>
                   <div class="col-sm-6 col-md-6 flex">
-                      <input type="text" class="form-control form-control-sm" id="search" name="q" style="width: 200px">&nbsp;
+                      <input type="text" class="form-control form-control-sm" id="search" name="q" style="width: 200px" value="{{ request()->get('q') }}">&nbsp;
                       <button type="submit" class="btn btn-sm btn-default">Search</button>
                   </div>
               </div>

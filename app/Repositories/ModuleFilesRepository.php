@@ -19,13 +19,27 @@ class ModuleFilesRepository
         return ModuleFiles::orderBy('position','ASC')->pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10, $fk_group = []) {
-        if( auth()->user()->hasRole('admin') ) {
-            return ModuleFiles::with(['data_group_files'])->orderBy('position','ASC')->paginate(10);
-        }else{
-            $group_file = GroupFiles::whereIn('fk_group',$fk_group)->pluck('fk_module_file')->toArray();
-            return ModuleFiles::with(['data_group_files'])->whereIn('id',$group_file)->orderBy('position','ASC')->paginate(10);
+    public function getPaginate($paginate = 10, $search = [], $fk_group = []) {
+        $query =  ModuleFiles::with(['data_group_files']);
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
         }
+
+        if( auth()->user()->hasRole('peserta') ) {
+            $group_file = GroupFiles::whereIn('fk_group',$fk_group)->pluck('fk_module_file')->toArray();
+            $query->whereIn('id',$group_file);
+        }
+
+        return $query->orderBy('position','ASC')->paginate($paginate);
+
+        // if( auth()->user()->hasRole('admin') ) {
+        //     return ModuleFiles::with(['data_group_files'])->orderBy('position','ASC')->paginate(10);
+        // }else{
+        //     $group_file = GroupFiles::whereIn('fk_group',$fk_group)->pluck('fk_module_file')->toArray();
+        //     return ModuleFiles::with(['data_group_files'])->whereIn('id',$group_file)->orderBy('position','ASC')->paginate(10);
+        // }
     }
 
     public function FetchById($id) {

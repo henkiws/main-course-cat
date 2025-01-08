@@ -16,8 +16,15 @@ class RoleRepository
         return Role::pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return Role::paginate(10);
+    public function getPaginate($paginate = 10, $search = []) {
+        $query =  Role::query();
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->paginate($paginate);
     }
 
     public function FetchById($id) {

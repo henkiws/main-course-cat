@@ -16,8 +16,15 @@ class ChapterVideosRepository
         return ChapterVideos::orderBy('position','ASC')->pluck('name','id');
     }
 
-    public function getPaginate($paginate = 10) {
-        return ChapterVideos::orderBy('position','ASC')->paginate(10);
+    public function getPaginate($paginate = 10, $search = []) {
+        $query =  ChapterVideos::query();
+        if( count($search) ) {
+            foreach( $search as $key => $val ) {
+                $query->where($key,'like','%'.$val.'%');
+            }
+        }
+
+        return $query->orderBy('position','ASC')->paginate($paginate);
     }
 
     public function getPaginateByChapter($fk_chapter, $paginate = 10) {

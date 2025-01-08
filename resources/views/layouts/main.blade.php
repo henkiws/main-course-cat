@@ -54,6 +54,9 @@
         display: flex;
         justify-content: end;
       }
+      .fa-eye, .fa-edit, .fa-play {
+        color: white;
+      }
     </style>
 
     @stack('css')
@@ -96,26 +99,41 @@
     <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="{{ asset('/') }}js/adminlte.js"></script>
     <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
-    <script>
-      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
-      const Default = {
-        scrollbarTheme: 'os-theme-light',
-        scrollbarAutoHide: 'leave',
-        scrollbarClickScroll: true,
-      };
-      document.addEventListener('DOMContentLoaded', function () {
-        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-        if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
-          OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-            scrollbars: {
-              theme: Default.scrollbarTheme,
-              autoHide: Default.scrollbarAutoHide,
-              clickScroll: Default.scrollbarClickScroll,
-            },paginationmVae0iJuiR+6OqHJHQ="
-      crossorigin="anonymous"
-    ></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+   
     <!-- sortablejs -->
     <script>
+      let BASE_URL = '{{ url("/") }}';
+      $(document).ready(function(){
+        var base_url = window.location.origin + '/' + window.location.pathname.split ('/') [1];
+        if( window.location.pathname.split ('/') [2] != undefined ) {
+          base_url = base_url + '/' + window.location.pathname.split ('/') [2];
+        }
+        if( window.location.pathname.split ('/') [3] != undefined ) {
+          base_url = base_url + '/' + window.location.pathname.split ('/') [3];
+        }
+        console.log(base_url, window.location.pathname.split ('/') [3])
+        $(document).on('change','#show',function(){
+          if( getParams('page') != null && getParams('q') != null ) {
+            window.location.href = base_url+'?show='+$(this).val()+'&page='+getParams('page')+'&q='+getParams('q');
+          }else if( getParams('page') != null ) {
+            window.location.href = base_url+'?show='+$(this).val()+'&page='+getParams('page');
+          }else if( getParams('q') != null ) {
+            window.location.href = base_url+'?show='+$(this).val()+'&q='+getParams('q');
+          }else{
+            window.location.href = base_url+'?show='+$(this).val();
+          }
+        })
+
+        function getParams(param) {
+          const queryString = window.location.search;
+          const urlParams = new URLSearchParams(queryString);
+          const result = urlParams.get(param)
+          return result;
+        }
+      })
+
       const connectedSortables = document.querySelectorAll('.connectedSortable');
       connectedSortables.forEach((connectedSortable) => {
         let sortable = new Sortable(connectedSortable, {
