@@ -148,7 +148,7 @@
                                 <img style="width: 200px;" src="https://exam.ksn-konsultan.com/public/images/logo_dark.png" />
                             </td>
                             <td class="text-left" style="width: 70%;">
-                                <span class="header-text text-bold">SEKOLAH EKSPOR IMPOR</span><br>
+                                <span class="header-text text-bold">{{ strtoupper($data->data_certificate->title) }}</span><br>
                                 <span class="subheader-text text-bold">TRANSKIP AKADEMIK</span>
                             </td>
                         </tr>
@@ -194,7 +194,7 @@
 					<thead>
 						<tr style="background-color:#e0e0e0;">
 							<td class="text-center">No</td>
-							<td class="text-left">Kompetensi yang dipilih</td>
+							<td class="text-left">Kompetensi</td>
 							<td class="text-center">Predikat</td>
 						</tr>
 					</thead>
