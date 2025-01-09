@@ -31,6 +31,10 @@ class ChapterVideosRepository
         return ChapterVideos::where('fk_chapter',$fk_chapter)->orderBy('position','ASC')->paginate($paginate);
     }
 
+    public function countByChapter($fk_chapter) {
+        return ChapterVideos::where('fk_chapter',$fk_chapter)->count();
+    }
+
     public function FetchById($id) {
         return ChapterVideos::findOrFail($id);
     }

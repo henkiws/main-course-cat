@@ -35,17 +35,29 @@
                   <a href="{{ route('chapters.show',[$chapter->fk_module]) }}" class="btn btn-secondary btn-sm mr-2">
                       <i class="fas fa-arrow-left"></i> Daftar Chapter
                   </a>
-                  <a href="{{ request()->get('page')>0? '?page='.(request()->get('page')-1) : '#' }}" class="btn btn-secondary btn-sm mr-2" disabled>
+                  @if( request()->get('page') > 1 )
+                    <a href="{{ request()->get('page')>0? '?page='.(request()->get('page')-1) : '#' }}" class="btn btn-primary btn-sm mr-2">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                  @else
+                    <button href="{{ request()->get('page')>0? '?page='.(request()->get('page')-1) : '#' }}" class="btn btn-secondary btn-sm mr-2" disabled>
                       <i class="fas fa-arrow-left"></i>
-                  </a>
-                  <a href="{{ !empty(request()->get('page')) ? (request()->get('page')>1 ? '?page='.(request()->get('page')+1) : '?page=2') : '?page=2'  }}" class="btn btn-primary btn-sm">
-                      <i class="fas fa-arrow-right"></i>
-                  </a>           
+                    </button>
+                  @endif
+                  @if( $chapter_video_count == request()->get('page') )
+                    <button href="{{ !empty(request()->get('page')) ? (request()->get('page')>1 ? '?page='.(request()->get('page')+1) : '?page=2') : '?page=2'  }}" class="btn btn-secondary btn-sm" disabled>
+                        <i class="fas fa-arrow-right"></i>
+                    </button> 
+                  @else
+                    <a href="{{ !empty(request()->get('page')) ? (request()->get('page')>1 ? '?page='.(request()->get('page')+1) : '?page=2') : '?page=2'  }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-arrow-right"></i>
+                    </a> 
+                  @endif          
               </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              @foreach( $chapter_videos as $key => $val )
+              @forelse( $chapter_videos as $key => $val )
               <h3>Video</h3>
               <div class="embed-responsive embed-responsive-16by9 mb-4">
                   <iframe class="embed-responsive-item" style="width:100%;height:650px;" src="https://www.youtube.com/embed/{{ getYouTubeID($val->link) }}" allowfullscreen></iframe>
@@ -54,7 +66,9 @@
               <p>{{ $val->title }}</p>
               <h3>Description</h3>
               <p>{{ $val->description }}</p>
-              @endforeach
+              @empty
+              <p class="text-center">No Data</p>
+              @endforelse
             </div>
             <!-- /.card-body -->
           </div>

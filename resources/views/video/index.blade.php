@@ -75,7 +75,7 @@
                             <td>{{ $val->title }}</td>
                             <td>{{ $val->description }}</td>
                             <td>{{ $val->link }}</td>
-                            <td>{{ $val->date_class }}</td>
+                            <td>{{ \Carbon\Carbon::parse($val->date_class)->format('d M Y') }}</td>
                             <td>{{ $val->tutor }}</td>
                             <td>
                                 @role('admin')

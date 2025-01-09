@@ -98,9 +98,6 @@ class ModuleFilesRepository
             "created_by"      => auth()->user()->id,
         ];
 
-        $ModuleFiles   = ModuleFiles::find($id);
-        $ModuleFiles->update($data);
-
         if( $request->file ) {
             $file   = $request->file;
             $folder = 'files';
@@ -109,6 +106,9 @@ class ModuleFilesRepository
             $data['filepath']   = $res['path'];
             $data['filename']   = $res['filename'];
         }
+
+        $ModuleFiles   = ModuleFiles::find($id);
+        $ModuleFiles->update($data);
 
         GroupFiles::where('fk_module_file',$ModuleFiles->id)->delete();
 

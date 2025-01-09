@@ -86,7 +86,7 @@
                                 <a href="{{ route('chapters.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit()">
                                     <i class="fas fa-trash"></i> 
                                 </a>
-                                <form id="form{{ $val->id }}" action="{{ route('chapters.destroy',[$val->id]) }}" method="POST" class="d-none">
+                                <form id="form{{ $val->id }}" action="{{ route('chapters.destroy',[$val->id,'fk_module='.$module->id]) }}" method="POST" class="d-none">
                                   @csrf
                                   @method('delete')
                                 </form>

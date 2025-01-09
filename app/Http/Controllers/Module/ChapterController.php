@@ -50,7 +50,8 @@ class ChapterController extends Controller
     public function details($id) {
         $data = [
             "chapter" => $this->ChaptersRepository->FetchById($id),
-            "chapter_videos" => $this->ChapterVideosRepository->getPaginateByChapter($id,1)
+            "chapter_videos" => $this->ChapterVideosRepository->getPaginateByChapter($id,1),
+            "chapter_video_count" => $this->ChapterVideosRepository->countByChapter($id),
         ];
         return view('chapters.details', $data);
     }

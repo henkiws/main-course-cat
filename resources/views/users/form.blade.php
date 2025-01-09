@@ -59,9 +59,7 @@
                         <label for="name">Role</label>
                         <select class="form-control" name="role">
                             @foreach($opt_role as $key => $val)
-                            @if($val=="peserta")
                             <option value="{{ $val }}" {{ isset($user->id) ? ($user->roles->pluck("name")->first() == $val ? "selected" : "") : '' }}>{{ $val }}</option>
-                            @endif
                             @endforeach
                         </select>
                     </div>

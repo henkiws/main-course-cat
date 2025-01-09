@@ -80,10 +80,10 @@
                             </td>
                             <td>{!! $val->fk_cbt_user > 0 || $val->fk_cbt_student > 0 ? "<span class='badge bg-success'>Yes</span>" : "<span class='badge bg-danger'>No</span>" !!}</td>
                             <td>
-                                @if( $val->roles->pluck("name")->first() != "admin" )
-                                <a href="{{ route('users.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
-                                    <i class="fas fa-edit"></i> 
-                                </a>
+                              <a href="{{ route('users.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
+                                <i class="fas fa-edit"></i> 
+                              </a>
+                              @if( $val->roles->pluck("name")->first() != "admin" )
                                 <a href="{{ route('users.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit()">
                                     <i class="fas fa-trash"></i> 
                                 </a>

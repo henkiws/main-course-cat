@@ -43,7 +43,7 @@ class FileController extends Controller
 
     public function show($id) {
         $file   = $this->ModuleFilesRepository->FetchById($id);
-        return response()->file($file->filepath);
+        return response()->file(base_path('public').'/'.$file->filepath);
     }
 
     public function edit($id) {
@@ -65,7 +65,8 @@ class FileController extends Controller
             'date_class' => 'required',
             'tutor' => 'required',
             'position' => 'required',
-            'file' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'fk_group' => 'required',
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,zip,doc,docx,xls,xlsx,ppt,pptx,pdf,chm|max:2048',
         ]);
         $result = $this->ModuleFilesRepository->create($request);
         if( $result['status'] == "success" ) {
@@ -84,9 +85,10 @@ class FileController extends Controller
             'date_class' => 'required',
             'tutor' => 'required',
             'position' => 'required',
+            'fk_group' => 'required',
         ];
-        if($request->file('file')) {
-            $validate['file']='required|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        if($request->hasFile('file')) {
+            $validate['file']='required|mimes:jpeg,png,jpg,gif,svg,zip,doc,docx,xls,xlsx,ppt,pptx,pdf,chm|max:2048';
         }
         $this->validate($request, $validate);
         $result = $this->ModuleFilesRepository->update($id, $request);

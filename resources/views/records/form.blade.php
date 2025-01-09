@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                       <label for="name">Group</label>
-                      <select class="form-control" name="fk_group[]" multiple>
+                      <select class="form-control" name="fk_group[]" multiple required>
                           @foreach($opt_group as $key => $val)
                           <option value="{{ $key }}" 
                             @isset($record->id)

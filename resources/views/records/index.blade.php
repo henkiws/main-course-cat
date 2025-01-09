@@ -72,13 +72,13 @@
                             <td>{{ ($key+1) }}</td>
                             <td>
                               @foreach($val->data_group_records as $k => $v)
-                                {{ $v->data_group->name.',' }}
+                                {{ ($v->data_group->name??'').',' }}
                               @endforeach
                             </td>
                             <td>{{ $val->title }}</td>
                             <td>{{ $val->description }}</td>
                             <td>{{ $val->tutor }}</td>
-                            <td>{{ $val->date_class }}</td>
+                            <td>{{ \Carbon\Carbon::parse($val->date_class)->format('d M Y') }}</td>
                             <td>
                                 <a href="{{ route('records.show',[$val->id]) }}" class="btn btn-info btn-sm btn-equal">
                                     <i class="fas fa-play"></i> 

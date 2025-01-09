@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ isset($file->id) ? route('files.update',[$file->id]) : route('files.store') }}" method="POST">
+                <form action="{{ isset($file->id) ? route('files.update',[$file->id]) : route('files.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @if(isset($file->id))
                     @method('PUT')
@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                       <label for="name">Group</label>
-                      <select class="form-control" name="fk_group[]" multiple>
+                      <select class="form-control" name="fk_group[]" multiple required>
                           @foreach($opt_group as $key => $val)
                           <option value="{{ $key }}" 
                             @isset($file->id)

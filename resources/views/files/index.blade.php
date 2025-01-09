@@ -72,15 +72,15 @@
                             <td>{{ ($key+1) }}</td>
                             <td>
                               @foreach($val->data_group_files as $k => $v)
-                                {{ $v->data_group->name.',' }}
+                                {{ ($v->data_group->name??'').',' }}
                               @endforeach
                             </td>
                             <td>{{ $val->title }}</td>
                             <td>{{ $val->description }}</td>
                             <td>{{ $val->tutor }}</td>
-                            <td>{{ $val->date_class }}</td>
+                            <td>{{ \Carbon\Carbon::parse($val->date_class)->format('d M Y') }}</td>
                             <td>
-                                <a href="{{ route('files.show',[$val->id]) }}" target="_blank" class="btn btn-success btn-sm btn-equal">
+                                <a href="{{ route('files.show',[$val->id,'t='.\Str::random(10)]) }}" target="_blank" class="btn btn-success btn-sm btn-equal">
                                   <i class="fas fa-eye"></i>
                                 </a>
                                 @role('admin')
