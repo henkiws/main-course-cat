@@ -39,11 +39,6 @@ php artisan serve
 > [!TIP]
 > Default admin email is : `admin@mail.com` (admin) or `alex@mail.com` (peserta) and default password is: `admin123`
 
-
-## Demo
-
-> Online demo available here: <a href="https://ecourse.ksn-konsultan.com">https://ecourse.ksn-konsultan.com/home</a>
-
 ### Screenshots
 
 ![1](https://raw.githubusercontent.com/henkiws/main-course-cat/master/public/screenshots/1.png)
