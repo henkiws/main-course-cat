@@ -35,7 +35,7 @@ class UserController extends Controller
     public function create() {
         $data = [
             "opt_role" => $this->RoleRepository->getDropdown(),
-            "opt_group" => $this->GroupRepository->getDropdown(),
+            "opt_group" => $this->GroupRepository->getDropdownSynced(),
         ];
         return view('users.form', $data);
     }

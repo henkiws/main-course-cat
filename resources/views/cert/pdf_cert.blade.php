@@ -79,6 +79,20 @@
                 z-index: -1000;
                 font-size: 130px;
             }
+            .mark {
+                position: absolute;
+                float: right;
+                font-size: 10px;
+                font-style: italic;
+                width: 200px;
+                top: 20px;
+            }
+            .avatar {
+                position: absolute;
+                float: right;
+                width: 200px;
+                bottom: 20px;
+            }
         </style>
 	</head>
 	<body> 
@@ -89,8 +103,11 @@
                     <span class="text-center">Nomor Sertifikat</span><br>
                     <span class="text-center">{{ $data->ref }}</span>
                 </div>
+                <div class="mark">
+                    Sertifikat ini dicetak secara otomatis oleh sistem komputer dan tidak memerlukan tanda tangan dan stempel basah
+                </div>
                 <div class="certificate-header" style="">
-                    <img src="https://exam.ksn-konsultan.com/public/images/logo_dark.png" class="logo" alt="">
+                    <img src="{{ base_path('public/data/cert_logo.png') }}" class="logo" alt="">
                 </div>
                 <div class="certificate-body">
                     <h1>{{ strtoupper($data->data_certificate->title) }}</h1>
@@ -107,17 +124,21 @@
                             <div class="col-md-6">
                                 Jakarta, {{ \Carbon\Carbon::parse($data->certificate_date)->format('d M Y') }}
                                 <br> Direktur,
-                                <img src="https://toppng.com/uploads/preview/fake-stamp-11523434718dcyoannbr0.png" style="width: 100px;height: auto;position: absolute;left: 30%;bottom: 70px;">
-                                <img src="https://asset-2.tstatic.net/pontianak/foto/bank/images/tanda-tangan_20160822_190559.jpg" style="width: 100px;height: auto;position: absolute;bottom: 80px;left: 45%;">
+                                <img src="{{ base_path('public/data/cert_stamp.png') }}" style="width: 300px;height: auto;position: absolute;left: 15%;bottom: 30px;">
+                                <img src="{{ base_path('public/data/cert_ttd.png') }}" style="width: 250px;height: auto;position: absolute;bottom: 50px;left: 37%;">
                                 <br>
                                 <br>
                                 <br>
                                 <br>
-                                <br>Hafidan Ghafi Rafaeyza Subakti
-                            </div>
+                                <br>Yosi Girsang
                             </div>
                         </div>
                     </div>
+
+                    <div class="avatar">
+                        <img src="{{ base_path('public/'.(!empty($data->data_user->avatar) ? $data->data_user->avatar : 'data/nouser.png')) }}" style="width: 200px;border-radius:10px;">
+                    </div>
+
                 </div>
             </div>
         </div>

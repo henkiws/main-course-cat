@@ -76,7 +76,7 @@
             <!--begin::Menu Footer-->
             <li class="user-footer">
               <a href="{{ route('profile.index') }}" class="btn btn-default btn-flat">Profile</a>
-              <a href="{{ config('app.exam_url') }}" target="_blank" class="btn btn-default btn-flat">Exam CAT</a>
+              <a href="{{ config('app.exam_url') }}&role={{ auth()->user()->roles->pluck("name")->first() }}&email={{ auth()->user()->email }}" target="_blank" class="btn btn-default btn-flat">Exam CAT</a>
               <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-end" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sign out</a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf

@@ -123,7 +123,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'exam_url' => env('URL_EXAM_CAT','http://localhost:8005/'),
+    'exam_url' => env('URL_EXAM_CAT','http://localhost:8005?source=courses&token=HDi7DGy8okTa6gvjVOVivMRaxKv7gh1qtXXWkqjvzVBqjuPJUWbq'),
 
     /*
     |--------------------------------------------------------------------------

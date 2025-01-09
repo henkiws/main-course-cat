@@ -88,6 +88,8 @@ class UserCertificateRepository
                 $mergedPdf = $merger->merge();
                 Storage::disk('public_html')->put('data/cert/'.$filename, $mergedPdf);
 
+                // return response()->file(base_path() . '/public/data/cert/cert_'.$filename.'.pdf');
+
                 DB::commit();
                 return response()->streamDownload(function () use ($mergedPdf)  { 
                     echo $mergedPdf;

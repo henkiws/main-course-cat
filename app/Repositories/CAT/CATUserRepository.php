@@ -65,7 +65,7 @@ class CATUserRepository
         try {
             $data   = [
                 "username"      => $request->get('username'),
-                "password"      => $request->get('password'),
+                "password"      => sha1($request->get('password')),
                 "nama"      => $request->get('nama'),
                 "opsi1"      => $request->get('opsi1'),
                 "opsi2"      => $request->get('opsi2'),

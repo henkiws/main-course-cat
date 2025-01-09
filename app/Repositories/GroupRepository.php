@@ -21,8 +21,12 @@ class GroupRepository
         return Group::count();
     }
 
-    public function getDropdown($is_premium=0) {
+    public function getDropdown() {
         return Group::pluck('name','id');
+    }
+
+    public function getDropdownSynced() {
+        return Group::where('fk_cbt_group','>',0)->pluck('name','id');
     }
 
     public function getPaginate($paginate = 10, $search = []) {
