@@ -11,5 +11,5 @@ class ChapterVideos extends Model
 
     protected $table = 'chapter_videos';
     protected $fillable = ['fk_chapter','link','title','description','date_class',
-                            'tutor','position','active','created_by'];
+                            'tutor','position','active','created_by','filepath'];
 }

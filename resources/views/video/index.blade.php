@@ -12,7 +12,7 @@
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('modules.index') }}">Module</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('chapters.show',[$chapter->id]) }}">Chapter</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('chapters.show',[$chapter->fk_module]) }}">Chapter</a></li>
             <li class="breadcrumb-item active" aria-current="page">Video</li>
           </ol>
         </div>
@@ -78,6 +78,11 @@
                             <td>{{ \Carbon\Carbon::parse($val->date_class)->format('d M Y') }}</td>
                             <td>{{ $val->tutor }}</td>
                             <td>
+                                @if(!empty($val->filepath))
+                                <a href="{{ asset($val->filepath) }}" target="_blank" class="btn btn-info btn-sm btn-custom btn-equal">
+                                    <i class="fas fa-eye"></i> 
+                                </a>
+                                @endif
                                 @role('admin')
                                 <a href="{{ route('videos.edit',[$val->id,'fk_chapter='.$fk_chapter]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 

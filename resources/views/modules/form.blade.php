@@ -45,15 +45,15 @@
                     
                     <div class="form-group">
                       <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ isset($module->id) ? $module->name : old('name')  }}">
+                      <input type="text" class="form-control" required id="name" name="name" placeholder="Enter name" value="{{ isset($module->id) ? $module->name : old('name')  }}">
                     </div>
                     <div class="form-group">
                       <label for="name">Description</label>
-                      <textarea class="form-control" id="description" name="description">{{ isset($module->id) ? $module->description : old('description')  }}</textarea>
+                      <textarea class="form-control" required id="description" name="description">{{ isset($module->id) ? $module->description : old('description')  }}</textarea>
                     </div>
                     <div class="form-group">
                       <label for="position">Position</label>
-                      <input type="number" class="form-control" id="position" name="position" placeholder="Enter position" value="{{ isset($module->id) ? $module->position : old('position')  }}">
+                      <input type="number" class="form-control" required id="position" name="position" placeholder="Enter position" value="{{ isset($module->id) ? $module->position : old('position')  }}">
                     </div>
                   </div>
                   <!-- /.card-body -->

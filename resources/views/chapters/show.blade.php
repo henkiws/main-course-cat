@@ -77,7 +77,7 @@
                                 <i class="fas fa-eye"></i> 
                               </a>
                               @role('admin')
-                              <a href="{{ route('videos.index',['fk_chapter='.$val->id]) }}" class="btn btn-primary btn-sm btn-equal">
+                              <a href="{{ route('videos.index',['fk_chapter='.$val->id.'&'.'fk_module='.$module->id]) }}" class="btn btn-primary btn-sm btn-equal">
                                   <i class="fas fa-plus"></i> 
                               </a>
                                 <a href="{{ route('chapters.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">

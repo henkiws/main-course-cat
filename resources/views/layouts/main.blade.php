@@ -6,6 +6,9 @@
     <title>ECOURSE</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="Courses - KSN Akademi" />
+    <meta name="author" content="Henki Wisnu Subakti" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link

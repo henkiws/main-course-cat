@@ -3,10 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\ChapterVideos;
+use App\Traits\FileUploadTrait;
 use DB;
 
 class ChapterVideosRepository
-{
+{   
+    use FileUploadTrait;
     
     public function getAll() {
         return ChapterVideos::orderBy('position','ASC')->get();
@@ -56,6 +58,14 @@ class ChapterVideosRepository
             "created_by"      => auth()->user()->id,
         ];
 
+        if( $request->filepath ) {
+            $file   = $request->filepath;
+            $folder = 'files/video';
+            $res    = $this->uploadFileOnly($file,$folder);
+
+            $data['filepath']   = $res['path'];
+        }
+
         $ChapterVideos   = ChapterVideos::create($data);
        
         return [
@@ -78,6 +88,14 @@ class ChapterVideosRepository
             "active"      => 1,
             "created_by"      => auth()->user()->id,
         ];
+
+        if( $request->filepath ) {
+            $file   = $request->filepath;
+            $folder = 'files/video';
+            $res    = $this->uploadFileOnly($file,$folder);
+
+            $data['filepath']   = $res['path'];
+        }
 
         $ChapterVideos   = ChapterVideos::find($id);
         $ChapterVideos->update($data);

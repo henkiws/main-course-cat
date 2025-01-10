@@ -63,6 +63,15 @@ class RecordController extends Controller
     }
 
     public function store(Request $request) {
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'link' => 'required',
+            'filepath' => 'required|mimes:jpeg,png,jpg,gif,svg,zip,doc,docx,xls,xlsx,ppt,pptx,pdf,chm|max:2048',
+            'date_class' => 'required',
+            'tutor' => 'required',
+            'position' => 'required',
+        ]);
         $result = $this->ModuleRecordsRepository->create($request);
         if( $result['status'] == "success" ) {
             session()->flash('success', $result['msg']);
@@ -74,6 +83,19 @@ class RecordController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $validate = [
+            'title' => 'required',
+            'description' => 'required',
+            'link' => 'required',
+            'date_class' => 'required',
+            'tutor' => 'required',
+            'position' => 'required',
+        ];
+        if($request->hasFile('filepath')) {
+            $validate['filepath']='required|mimes:jpeg,png,jpg,gif,svg,zip,doc,docx,xls,xlsx,ppt,pptx,pdf,chm|max:2048';
+        }
+        $this->validate($request, $validate);
+
         $result = $this->ModuleRecordsRepository->update($id, $request);
         if( $result['status'] == "success" ) {
             session()->flash('success', $result['msg']);
