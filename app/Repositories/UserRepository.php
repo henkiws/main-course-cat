@@ -217,28 +217,37 @@ class UserRepository
                         "keterangan"      => '-',
                         "level"      => 'admin',
                     ];
-                    $newReq = new \Illuminate\Http\Request($data_array);
-                    $result_admin = $this->CATUserRepository->update($User->fk_cbt_user,$newReq);
-
-                    if( $result_admin['status'] == "success" ) {
-
-                        $User->update([
-                            "fk_cbt_user" => $result_admin['data']->id
-                        ]);
-        
-                        DB::commit();
-                        return [
-                            "status"    => "success",
-                            "msg"       => "Data has been saved successfully!",
-                            "data"      => []
-                        ];
+                    if( $User->fk_cbt_user > 0 ) {
+                        $newReq = new \Illuminate\Http\Request($data_array);
+                        $result_admin = $this->CATUserRepository->update($User->fk_cbt_user,$newReq);
+    
+                        if( $result_admin['status'] == "success" ) {
+    
+                            $User->update([
+                                "fk_cbt_user" => $result_admin['data']->id
+                            ]);
+            
+                            DB::commit();
+                            return [
+                                "status"    => "success",
+                                "msg"       => "Data has been saved successfully!",
+                                "data"      => []
+                            ];
+                        }else{
+                            DB::rollback();
+                            return [
+                                "status"    => "error",
+                                "msg"       => $result_admin['msg'],
+                                "data"      => []
+                            ];
+                        }
                     }else{
                         DB::rollback();
-                        return [
-                            "status"    => "error",
-                            "msg"       => $result_admin['msg'],
-                            "data"      => []
-                        ];
+                            return [
+                                "status"    => "error",
+                                "msg"       => 'Not synced yet',
+                                "data"      => []
+                            ];
                     }
 
                 }else{ // student

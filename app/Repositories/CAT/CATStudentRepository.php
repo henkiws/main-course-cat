@@ -70,7 +70,6 @@ class CATStudentRepository
             $data   = [
                 "user_grup_id"      => $request->get('user_grup_id'),
                 "user_name"      => $request->get('user_name'),
-                // "user_password"      => $request->get('user_password'),
                 "user_email"      => $request->get('user_email'),
                 "user_regdate"      => $request->get('user_regdate'),
                 "user_ip"      => $request->get('user_ip'),

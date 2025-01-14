@@ -57,12 +57,15 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Role</label>
-                        <select class="form-control" name="role">
+                        <select class="form-control" name="role" {{ isset($user->id) ? ($user->roles->pluck("name")->first() ? "disabled" : "") : '' }}>
                             @foreach($opt_role as $key => $val)
                             <option value="{{ $val }}" {{ isset($user->id) ? ($user->roles->pluck("name")->first() == $val ? "selected" : "") : '' }}>{{ $val }}</option>
                             @endforeach
                         </select>
                     </div>
+                    @isset($user->id)
+                    <input type="hidden" name="role" value="{{ $user->roles->pluck("name")->first() }}">
+                    @endisset
                     <div class="form-group">
                         <label for="name">Group</label>
                         <select class="form-control" name="fk_group">

@@ -75,7 +75,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|max:100|unique:users,email,'.$id,
             'fk_group' => 'required',
-            'role' => 'required',
+            // 'role' => 'required',
         ]);
 
         $result = $this->UserRepository->update($id, $request);
