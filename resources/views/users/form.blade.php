@@ -70,7 +70,7 @@
                         <label for="name">Group</label>
                         <select class="form-control" name="fk_group">
                             @foreach($opt_group as $key => $val)
-                            <option value="{{ $key }}" {{ isset($user->id) ? ($user->data_user_group->fk_group == $key ? 'selected' : '') : '' }}>{{ $val }}</option>
+                            <option value="{{ $key }}" {{ isset($user->data_user_group->fk_group) ? ($user->data_user_group->fk_group == $key ? 'selected' : '') : '' }}>{{ $val }}</option>
                             @endforeach
                         </select>
                     </div>
