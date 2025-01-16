@@ -82,11 +82,11 @@
                                 <a href="{{ route('groups.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                     <i class="fas fa-edit"></i> 
                                 </a>
-                                @if( $val->fk_cbt_group == 0 )
+                                {{-- @if( $val->fk_cbt_group == 0 ) --}}
                                 <a href="{{ route('groups.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit();">
                                     <i class="fas fa-trash"></i> 
                                 </a>
-                                @endif
+                                {{-- @endif --}}
                                 <form id="form{{ $val->id }}" action="{{ route('groups.destroy',[$val->id]) }}" method="POST" class="d-none">
                                   @csrf
                                   @method('delete')

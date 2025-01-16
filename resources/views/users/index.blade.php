@@ -83,7 +83,7 @@
                               <a href="{{ route('users.edit',[$val->id]) }}" class="btn btn-warning btn-sm btn-equal">
                                 <i class="fas fa-edit"></i> 
                               </a>
-                              @if( $val->roles->pluck("name")->first() != "admin" )
+                              {{-- @if( $val->roles->pluck("name")->first() != "admin" ) --}}
                                 <a href="{{ route('users.destroy',[$val->id]) }}" class="btn btn-danger btn-sm btn-equal" onclick="event.preventDefault();document.getElementById('form{{ $val->id }}').submit()">
                                     <i class="fas fa-trash"></i> 
                                 </a>
@@ -91,7 +91,7 @@
                                   @csrf
                                   @method('delete')
                                 </form>
-                                @endif
+                              {{-- @endif --}}
                             </td>
                         </tr>
                     @endforeach
